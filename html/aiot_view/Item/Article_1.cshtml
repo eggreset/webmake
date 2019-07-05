@@ -1,0 +1,52 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<!--===================================主圖輪播================================================-->
+<div id="top" class="">
+    <section id="hero" name="hero">
+        <div class="slide_wrap" name="heroslide">
+            <div class="slide_body h_8">
+                <ul class="slide_mover">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.DataResult.Data)
+                        {
+                            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+                            if (mainImage != null)
+                            {
+                                <li class="slide_item" style="width: 100%; z-index: 1;">
+                                    <div class="slide_img load-bg-image" data-pc-src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" data-tb-src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" data-sp-src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" style="background-image: url('@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))'); width: 1904px; background-color: #456237;">
+                                        <div class="text">
+                                            <a>
+                                                <h1>@item.ParentItems.FirstOrDefault().Subject</h1>
+                                            </a>
+                                            <h2>@item.ItemLanguage.Subject</h2>
+                                            <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 30)</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="slide_control" each="pagers">
+            @if (Model != null)
+            {
+                for (int i = 0; i < Model.DataResult.Data.Count; i++)
+                {
+                    <div class="pager" eq="pagers/@i.ToString()">
+                        <a href="#" class="">
+                            <div class="line_wrap"><span class="cu_line" style="width: 0%; left: 0px; right: 0px;"></span></div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+</div>
+<!--===================================主圖輪播================================================-->

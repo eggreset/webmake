@@ -1,0 +1,58 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 一般文章列表-分頁 *@
+@functions {
+    enum StyleSet
+    {
+        ThreeColInRow = 1,
+        FourColInRow
+    }
+}
+
+@if (ViewBag.StyleSet == StyleSet.ThreeColInRow)
+{
+    <!--======================================列表:一列3欄=============================================-->
+    foreach (var item in Model.DataResult.Data)
+    {
+        var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+        if (mainImage != null)
+        {
+
+            <div class="aside_3">
+                <div class="img pic"><img src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" /></div>
+                <hgroup>
+                    <h1><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">@item.ItemLanguage.Subject</a></h1>
+                    <p>
+                        @_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)
+                    </p>
+                    <p class="publish_day"><i class="fas fa-pen-nib"></i>@item.Item.Date.ToDateString("yyyy/MM/dd")</p>
+                    <span class="link_box"><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">more <i class="fas fa-angle-double-right"></i></a></span>
+                </hgroup>
+            </div>
+        }
+    }
+}
+else
+{
+    foreach (var item in Model.DataResult.Data)
+    {
+        var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+        if (mainImage != null)
+        {
+            <div class="aside_4 wow bounceInUp">
+                <div class="img pic"><a href="sub_page_news.html"><img src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" /></a></div>
+                <hgroup>
+                    <h1><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">@item.ItemLanguage.Subject</a></h1>
+                    <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)</p>
+                    <p class="publish_day"><i class="fas fa-pen-nib"></i>@item.Item.Date.ToDateString("yyyy/MM/dd")</p>
+                    <span class="link_box"><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">more <i class="fas fa-angle-double-right"></i></a></span>
+                </hgroup>
+            </div>
+        }
+    }
+}

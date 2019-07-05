@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="img/favicon.png" type="image/png" />
+  <title>嚼世好堅｜購物車</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="vendors/linericon/style.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/themify-icons.css" />
+  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+  <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+  <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+  <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+  <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+  <!-- main css -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+
+<body>
+    <!--================Header Menu Area =================-->
+    <header class="header_area"></header>
+    <!--================Header Menu Area =================-->
+    <!--================Home Banner Area =================-->
+    <section class="banner_area pagination-banner ">
+        <div class="banner_mask d-flex align-items-center ">
+            <div class="container">
+                <div class="banner_content d-md-flex justify-content-between align-items-center">
+                    <div class="mb-3 mb-md-0">
+                        <h2>購物車</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="container d-flex done-list">
+        <div class="order d-flex done" id="order1">
+            <div><em>1</em></div>
+            <div>
+                <span>Choose</span>
+                <p>放入購物車</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order2">
+            <div><em>2</em></div>
+            <div>
+                <span>Login</span>
+                <p>登入會員</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order3">
+            <div><em>3</em></div>
+            <div>
+                <span>Check</span>
+                <p>確認資料</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order4">
+            <div><em>4</em></div>
+            <div>
+                <span>Complete</span>
+                <p>訂購完成</p>
+            </div>
+        </div>
+    </section>
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th scope="col">產品</th>
+                                <th scope="col">價格</th>
+                                <th scope="col" style="width:130px;">數量</th>
+                                <th scope="col" style="width:150px;">總計</th>
+                                <th scope="col" style="width:100px;"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <div class="media d-flex" style="flex-wrap:wrap;">
+                                        <div class="d-flex">
+                                            <img src="img/product/sport.jpg" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>綜合堅果-薄鹽</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>$360</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                                               class="input-text qty" />
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                class="increase items-count" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                                class="reduced items-count" type="button">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td style="width:150px;">
+                                    <h5>$720</h5>
+                                </td>
+                                <td>
+                                        <a href="#" class="icons">
+                                            <div class="ti-close" aria-hidden="true"></div>
+                                        </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="media d-flex" style="flex-wrap:wrap;">
+                                        <div class="d-flex">
+                                            <img src="img/product/sport.jpg" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>綜合堅果-薄鹽</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>$360</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                                               class="input-text qty" />
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                class="increase items-count" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                                class="reduced items-count" type="button">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>$720</h5>
+                                </td>
+                                <td>
+                                    <div class="nav-item">
+                                        <a href="#" class="icons">
+                                            <div class="ti-close" aria-hidden="true"></div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="media d-flex" style="flex-wrap:wrap;">
+                                        <div class="d-flex">
+                                            <img src="img/product/sport.jpg" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>綜合堅果-薄鹽</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>$360</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                                               class="input-text qty" />
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                class="increase items-count" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                                class="reduced items-count" type="button">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>$720</h5>
+                                </td>
+                                <td>
+                                    <div class="nav-item">
+                                        <a href="#" class="icons">
+                                            <div class="ti-close" aria-hidden="true"></div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="bottom_button" style="flex-wrap:wrap;">
+                                <td>
+                                    <!-- <a class="gray_btn" href="#">更新購物車</a> -->
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="cupon_text">
+                                        <input type="text" placeholder="Coupon Code" />
+                                        <a class="main_btn" href="#">使用優惠券</a>
+                                        <a class="gray_btn" href="#">不使用優惠券</a>
+                                    </div>
+                                </td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <h5>總計</h5>
+                                </td>
+                                <td>
+                                    <h5>$2160</h5>
+                                </td>
+                            </tr>
+                            <tr class="shipping_area">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <h5>運費</h5>
+                                </td>
+                                <td>
+                                    <div class="shipping_box">
+
+                                        <ul class="list">
+                                            <li>
+                                                <a href="#">超商貨到付款 70元</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">超商取貨 60元</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">宅配 200元</a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#">免運費</a>
+                                            </li>
+                                        </ul>
+                                        <!-- <h6>
+                                          配送資訊
+                                          <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        </h6>
+                                        <select class="shipping_select">
+                                          <option value="1">請選擇縣市</option>
+                                          <option value="2">台北市</option>
+                                          <option value="4">新北市</option>
+                                        </select>
+                                        <select class="shipping_select">
+                                          <option value="1">請選擇鄉/鎮/區</option>
+                                          <option value="2">Select a State</option>
+                                          <option value="4">Select a State</option>
+                                        </select>
+                                        <input type="text" placeholder="請輸入詳細地址" /> -->
+                                        <!-- <a class="gray_btn" href="#">Update Details</a> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="checkout_btn_inner">
+                                        <a class="gray_btn" href="./category.html">繼續購物</a>
+                                        <a class="main_btn" href="./tracking.html">確認結算</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+    <!--================ start footer Area  =================-->
+    <footer id="footer-area"></footer>
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendors/counter-up/jquery.counterup.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".header_area").load('header.html');
+            $("#footer-area").load('footer.html');
+        });
+    </script>
+    <style>
+        @media screen and (max-width: 1024px){
+            .container {
+                width: 100%;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,28 @@
+﻿@using WabMaker.Web.Helpers
+@model List<WabMaker.Web.WebViewModels.TreeWebViewModel>
+@GenerateTree(Model)
+@helper GenerateTree(List<WabMaker.Web.WebViewModels.TreeWebViewModel> nodes, int level = 1)
+{
+
+if (nodes != null)
+{
+    foreach (var item in nodes)
+    {
+        bool hasChild = item.Nodes != null && item.Nodes.Any();
+        var isActive = RouteHelper.Url(true) == HttpUtility.UrlDecode(item.Url);
+
+            <li class="@(isActive?"active":"") @(hasChild?"dropdown":"")">             
+                <a href="@item.Url" class="@(hasChild?"dropdown-toggle":"")" data-toggle="@(hasChild?"dropdown":"")">
+                @item.Name@(Html.Raw(ViewBag.style == "mobile" ? "" : ""))</a>
+                @if (hasChild)
+                {
+                    <ul class="dropdown-menu">
+                        @GenerateTree(item.Nodes, level + 1)
+                    </ul>
+                }
+            </li>
+    }//end foreach
+
+}
+
+}

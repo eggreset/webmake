@@ -1,0 +1,25 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WabMaker.Web.WebViewModels.CollectionListModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "購物車";
+    //包含欄位
+    List<ContentType> ContentTypes = Model.Structure.ContentTypes.ToContainList<ContentType>();
+}
+
+<h3>@ViewBag.Title</h3>
+<br>
+
+<div id="ShoppingCarTable">
+    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "1_ShoppingCart_Partial"), Model)
+</div>
+
+@section Scripts {
+    <script>
+        web.checkType();
+        web.orderEvent();
+    </script>
+}

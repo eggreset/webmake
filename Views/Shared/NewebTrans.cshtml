@@ -1,0 +1,22 @@
+﻿@model MyTool.ViewModels.NewebModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>transaction</title>
+</head>
+<body onload="document.Spgateway.submit()">
+    <form name='Spgateway' method='post' action='@Model.PostUrl'>
+        資料處理中...請稍後!
+        <input type='hidden' name='MerchantID' value='@Model.MerchantID' />
+        <input type='hidden' name='TradeInfo' value='@Model.TradeInfo' />
+        <input type='hidden' name='TradeSha' value='@Model.TradeSha' />
+        <input type='hidden' name='Version' value='@Model.Version' />
+    </form>
+</body>
+</html>

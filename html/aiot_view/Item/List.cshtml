@@ -1,0 +1,79 @@
+﻿@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.ViewModels
+@using WabMaker.Web.WebViewModels
+@using MyTool.Services
+@model WabMaker.Web.WebViewModels.ItemListModel
+@{
+    ViewBag.Title = Model.ItemViewModel.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    //每頁顯示筆數
+    Model.ItemPageModel.PageSize = 2;
+    var mainImage = Model.ItemViewModel.ItemFiles.Count == 0 ? new WabMaker.Web.WebViewModels.ItemWebFile() :
+                                                    Model.ItemViewModel.ItemFiles.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+}
+
+@functions {
+    enum StyleSet
+    {
+        ThreeColInRow = 1,
+        FourColInRow
+    }
+}
+
+@section MainSlider{
+    @Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Article_1",
+    ViewName = "Article_1",
+    PageSize = 3,
+    CurrentPage = 1,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid>
+        {
+        new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+})
+}
+
+    <div id="container" class="space_top">
+        <div class="wrap_box">
+            <!--======================================列表:一列3欄=============================================-->
+            @{
+        ViewBag.StyleSet = StyleSet.ThreeColInRow;
+            }
+            <div class="title_border"><div class="title_box"><h1 class="titlt_inline">@ViewBag.Title<mark>News </mark></h1><span class="titlt_inline"><a href="#">更多活動<i class="fas fa-angle-double-right"></i></a></span></div></div>
+            <div class="block_t20">
+                <div class="com article_3 wow fadeInUp" style="margin-bottom: 0px;padding-top: 0px;">
+                    @Html.Action("Partial", new { model = Model.ItemPageModel })
+                </div>
+            </div>
+
+            <!--======================================列表:一列3欄=============================================-->
+            <!--======================================列表:一列4欄=============================================-->
+            @{
+        ViewBag.StyleSet = StyleSet.FourColInRow;
+            }
+            <div class="title_border"><div class="title_box"><h1 class="titlt_inline">@ViewBag.Title<mark>News </mark></h1><span class="titlt_inline"><a href="#">更多活動<i class="fas fa-angle-double-right"></i></a></span></div></div>
+            <div class="block_t20">
+                <div class="com article_4 ">
+                    @Html.Action("Partial", new { model = Model.ItemPageModel })
+                </div></div>
+                <!--======================================列表:一列4欄=============================================-->
+
+                @Html.Action("Partial", "Item", new ItemPageModel
+            {
+                CacheName = "Article_5",
+                ViewName = "Article_5",
+                PageSize = 5,
+                CurrentPage = 1,
+                SortColumn = SortColumn.Date,
+                StructureJson = _Json.ModelToJson(new List<Guid>
+                    {
+                    new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+            })
+
+                <!--======================================[左列表‧右列表]列表:一列2================================================-->
+                @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Get_Partial_Related"), Model.ItemViewModel)
+            </div>
+        </div>

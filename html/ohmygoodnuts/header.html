@@ -1,0 +1,207 @@
+﻿<!-- <div class="top_menu">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="float-left">
+            <p>Phone: +01 256 25 235</p>
+            <p>email: info@eiser.com</p>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="float-right">
+            <ul class="right_side">
+              <li>
+                <a href="cart.html">
+                  gift card
+                </a>
+              </li>
+              <li>
+                <a href="tracking.html">
+                  track order
+                </a>
+              </li>
+              <li>
+                <a href="contact.html">
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<div class="main_menu">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light w-100">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <a class="navbar-brand logo_h" href="index.html">
+        <img src="./img/logo.png" class="logo">
+      </a>
+      <button class=" navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse offset w-100" id="navbarSupportedContent">
+        <div class="row w-100 mr-0">
+          <div class="col-lg-7 pr-0">
+            <ul class="nav navbar-nav center_nav pull-right">
+              <li class="nav-item">
+                <a class="nav-link" href="#">認識我們</a>
+              </li>
+
+              <li class="nav-item submenu dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">堅果日記</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="article.html">開箱日記</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="single-blog.html">堅果知識+</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item submenu dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">嚴選商品</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="category.html">全部商品</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="single-product.html">罐裝</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="checkout.html">隨手包</a>
+                  </li>
+                  <!-- <li class="nav-item">
+                                      <a class="nav-link" href="cart.html">Shopping Cart</a>
+                                    </li> -->
+                </ul>
+              </li>
+              <!-- <li class="nav-item submenu dropdown">
+                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">Pages</a>
+                              <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="tracking.html">Tracking</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="elements.html">Elements</a>
+                                </li>
+                              </ul>
+                            </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">聯絡我們</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-5 pr-0">
+            <ul class="nav navbar-nav navbar-right right_nav pull-right">
+              <li class="nav-item search" style="position: relative;">
+                <input class="search-input" id="search" type="text">
+                <a href=" #" class="icons">
+                  <label for="search">
+                    <i class="ti-search" aria-hidden="true"></i>
+                  </label>
+                </a>
+              </li>
+
+              <li style="position: relative;" class="nav-item">
+                <a href="./cart.html" class="icons">
+                  <i class="ti-shopping-cart"></i>
+                </a>
+                <span class="cart-num">12</span>
+              </li>
+
+              <li class="nav-item">
+                <a href="member.html" class="icons">
+                  <i class="ti-user" aria-hidden="true"></i>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .logo {
+    max-height: 80px;
+  }
+
+  .search-input {
+    position: absolute;
+    right: 20px;
+    bottom: 40%;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    transition: all 1s ease;
+  }
+
+  .search-open {
+    width: 150px;
+    height: 30px;
+    opacity: 1;
+  }
+
+  .cart-num {
+    background-color: #e5004e;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    left: 30px;
+    bottom: 30%;
+    pointer-events: none;
+  }
+
+
+  @media screen and (max-width: 1024px) {
+    .logo {
+      width: 50%;
+    }
+
+    .search-input {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 0px;
+      height: 0px;
+      opacity: 0;
+      transition: all 1s ease;
+    }
+
+    .search-open {
+      width: 150px;
+      height: 20px;
+      opacity: 1;
+    }
+
+    .cart-num {
+      left: 80%;
+      bottom: 40%;
+    }
+  }
+</style>
+
+<script>
+  $('#search').click(function () {
+
+    $('#search').toggleClass('search-open');
+  });
+</script>

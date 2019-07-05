@@ -1,0 +1,125 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WebMaker.Entity.ViewModels.OrderViewModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "確認訂單";
+
+    //var structure = Model.Order.cms_Structure;
+}
+
+@using (Html.BeginForm("ConfirmPost", "Order", FormMethod.Post))
+{
+    <input type="hidden" id="returnUrl" value="@Url.Action("Pay")" />
+    <input type="hidden" id="successMessage" data-title="@ViewBag.Title" value="@MyTool.Enums.MessageType.Confirm" />
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <h3>@ViewBag.Title</h3>
+    <br>
+    <h4>
+        <span class="label label-primary">購物明細</span>
+    </h4>
+    <table class="table table-striped">
+        <tr>
+            <th>商品</th>
+            <th>優惠價</th>
+            <th width="10%">數量</th>
+            <th>小計</th>
+        </tr>
+        @if (Model.OrderDetails != null)
+        {
+            foreach (var item in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@item.ItemSubject</td>
+                    <td>@item.SalePrice.ToPrice()</td>
+                    <td>@item.Quantity</td>
+                    <td class="text-right">@((item.SalePrice * item.Quantity).ToPrice())</td>
+                </tr>
+            }
+        }
+        <tr class="info">
+            <td colspan="3" class="text-right">
+                商品總計
+            </td>
+            <td class="text-right">
+                @Model.Order.DetailPrice.ToPrice()
+            </td>
+        </tr>
+
+        @*所有折扣*@
+        @if (Model.OrderDiscounts != null)
+        {
+            foreach (var item in Model.OrderDiscounts)
+            {
+                var discountName = item?.cms_Item?.cms_ItemLanguage.FirstOrDefault().Subject ?? "優惠";
+                <tr>
+                    <td colspan="3" class="text-right">
+                        @(discountName)
+                    </td>
+                    <td class="text-right">
+                        @item.DiscountPrice.ToPrice()
+                    </td>
+                </tr>
+            }
+        }
+
+        @*所有費用*@
+        @if (Model.OrderFees != null)
+        {
+            foreach (var item in Model.OrderFees)
+            {
+                var feeName = item.erp_FeeSetting?.Name ?? "手續費";
+                <tr>
+                    <td colspan="3" class="text-right">
+                        @(feeName)
+                    </td>
+                    <td class="text-right">
+                        @item.FeePrice.ToPrice()
+                    </td>
+                </tr>
+            }
+        }
+
+        <tr class="warning">
+            <td colspan="3" class="text-right">
+                共 @(Model.OrderDetails?.Sum(x => x.Quantity)) 件商品，總金額
+            </td>
+            <td class="text-right">
+                @Model.Order.TotalPrice.ToPrice()
+            </td>
+        </tr>
+    </table>
+    <h4>
+        <span class="label label-primary">付款方式與寄送資訊</span>
+    </h4>
+
+    <p>配送方式: @(Model.Order.DeliveryType.GetDisplayName<DeliveryType>())</p>
+    <p>付款方式: @(Model.Order.PayType.GetDisplayName<PayType>())<br> </p>
+    <p>收件人: @Model.Order.ReceiverName</p>
+    <p>聯絡電話: @Model.Order.ReceiverPhone</p>
+    <p>
+        寄送地址: @Model.Order.ReceiverAddress_ZIP @(Model.Order.Opt_City?.CityName) @(Model.Order.Opt_Region?.RegionName)
+        @Model.Order.ReceiverAddress
+    </p>
+    <p>Email: @Model.Order.ReceiverEmail</p>
+    <p>備註: @Model.Order.OrderNote<br></p>
+    <p>
+        發票:@(Model.Order.InvoiceType?.GetDisplayName<InvoiceType>())
+        @Model.Order.InvoiceTitle<span> </span>@Model.Order.InvoiceNumber
+    </p>
+
+    <div class="text-right">
+        <a href="@Url.Action("Checkout")" class="btn btn-default">上一頁</a>
+        <button id="SaveBtn" type="button" class="btn btn-warning">確認訂單</button>
+    </div>
+}
+
+@section scripts{
+
+}

@@ -1,0 +1,77 @@
+﻿@model WebMaker.Entity.ViewModels.LoginViewModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "會員登入";
+}
+
+
+<div id="top" style="z-index: 2;">
+    <div class="H_10" style="background-image: url('../../../html/Aiot/images/login_bg.jpg'); width: 1904px; ">
+    </div>
+    <span class="login_box form-style-10 wow bounceInUp">
+        <h1><i class="fas fa-user-edit"></i>  會員登入</h1>
+
+        @using (Html.BeginForm("Login", "Member", new { }, FormMethod.Post, new { @class = "form-member form-login" }))
+        {
+            <input type="hidden" name="url" value="@Request.QueryString["url"]" />
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="button-section">
+                <div data-v-21dcae14="" class="arrowFromLeft">
+                    <div data-v-21dcae14="">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9" width="9" height="9">
+                            <path d="M0 0l7 4.5L0 9V0z"></path>
+                        </svg>
+                        <span>
+                            <a href=@Url.Action("FacebookLogin", "Member",new {  url = Request["url"]})>
+                                <i class="fab fa-facebook-f"></i>使用Facebook登入
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-wrap">
+                <h2>AIday 會員登入</h2>
+                <label>
+                    <i class="far fa-address-card"></i>
+                    @Html.TextBoxFor(model => model.Account, new { id = "login_email", @class = "focus-input100 form-control", placeholder = "請輸入您有效的email帳號" })
+                    @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+                </label>
+                <label>
+                    <i class="fas fa-key"></i>
+                    @Html.PasswordFor(model => model.Password, new { id = "loginpass", @class = "form-control", placeholder = "請輸入您的密碼" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    <div class="section right">
+                        <span>
+                            <a href="@Url.Action("ForgotPassword","Member")">忘記密碼? </a>｜<a href="@Url.Action("ReSend","Member")">重寄認證信</a>
+                        </span>
+                    </div>
+                </label>
+                <label>
+                    <i class="fas fa-pencil-alt"></i>
+                    @Html.TextBoxFor(model => model.Captcha, "", new { @class = "form-control", placeholder = "驗證碼", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                </label>
+                <div class="cap_box">
+                    <img class="imgverifycode" src="@Url.Action("CaptchaImage","Member")" alt="驗證碼" />
+                    <a class="btnnewcode" href="javascript:"><i class="fas fa-sync-alt"></i>更新驗證碼</a>
+                </div>
+                <div class="button-section on_space_top">
+                    <input type="button" id="SaveBtn" value="登入">
+                </div>
+                <div class="section center">
+                    <span>
+                        還不是會員嗎？
+                        <a href="@Url.Action("SignUp","Member")" class="text_b">
+                            立刻註冊新帳號
+                            <i class="fas fa-chevron-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        }
+    </span>
+</div>
+

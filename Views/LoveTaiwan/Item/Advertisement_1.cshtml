@@ -1,0 +1,47 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="">
+    <ol class="carousel-indicators">
+        @if (Model != null)
+        {
+            for (int i = 0; i < Model.DataResult.Data.Count; i++)
+            {
+                <li data-target="#myCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : null)"></li>
+            }
+        }
+    </ol>
+    <div class="carousel-inner">
+        @if (Model != null)
+        {
+            foreach (var item in Model.DataResult.Data)
+            {
+                var mainImage = item.ItemFiles.FirstOrDefault(x => x.SourceType == SourceType.ItemConver);
+                if (mainImage != null)
+                {
+                    <div class="carousel-item welcomeArea @(item == Model.DataResult.Data.FirstOrDefault() ? "active" : "")" style="background-image: url(@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath));">
+                        <div class="container">
+                            <div class="carousel-caption text-left ">
+                                <h1>@item.ItemLanguage.Subject</h1>
+                                <p>@item.ItemLanguage.Description</p>
+                                <div class="single-post">
+                                    <a href="@item.ItemLanguage.LinkUrl" target="@(item.ItemLanguage.IsBlankUrl ? "_blank" : "_self")" class="read-more">繼續閱讀..</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

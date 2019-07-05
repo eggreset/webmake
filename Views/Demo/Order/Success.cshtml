@@ -1,0 +1,50 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@model OrderViewModel
+@{
+    ViewBag.Title = "訂單";
+    Layout = "../Shared/_Layout.cshtml";
+}
+<h2>
+    @if (Model.Order.OrderStatus == (int)OrderStatus.NonPayment
+                                  && Model.Order.PayType == (int)PayType.NewebCreditCard)
+    {
+        <span>刷卡失敗，請重新訂購...</span>
+    }
+    else
+    {
+        <span>我們已經收到您的訂單，感謝您的購買！</span>
+    }
+</h2>
+
+<p>
+    訂單
+    @if (Model.Order.OrderStatus == (int)OrderStatus.Processing)
+    {
+        <span>已成立</span>
+    }
+    else
+    {
+        <span>
+            @(Model.Order.OrderStatus.GetDisplayName<OrderStatus>())
+        </span>
+    }
+</p>
+
+@if (ViewBag.OrderContent != null)
+{
+    @Html.Raw(ViewBag.OrderContent)
+    <br>
+}
+
+@if (ViewBag.OrderPayInfo != null)
+{
+    <p>
+        @Html.Raw(ViewBag.OrderPayInfo)
+    </p>
+}
+
+<a href="@Url.Action("Order", "Member", new { type = Model.Order.StructureID })" class="btn btn-info">查看訂單</a>

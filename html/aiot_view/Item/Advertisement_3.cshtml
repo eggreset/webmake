@@ -1,0 +1,23 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@{
+    if (Model!=null && Model.DataResult.Data.Any())
+    {
+        var data = Model.DataResult.Data.FirstOrDefault();
+        var mainImage = data.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+        if (mainImage != null)
+        {
+            <div class="single-widget-area about-me-widget text-center">
+                <div class="widget-title">
+                    <h6>暢銷商品</h6>
+                </div>
+                <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" alt="">
+            </div>
+        }
+    }
+}
+
+

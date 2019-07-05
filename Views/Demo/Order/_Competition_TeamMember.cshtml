@@ -1,0 +1,96 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@* 比賽報名-團隊成員 *@
+@model WebMaker.Entity.ViewModels.EditOrderViewModel
+@{
+    var structure = Model.OrderViewModel.ItemViewModel.Item.cms_Structure;
+    //訂單狀態(Editing才可編輯)
+    var orderStatus = Model.OrderViewModel.Order.OrderStatus;
+}
+
+<h4>
+    選手資料
+    @if (orderStatus == (int)OrderStatus.Editing)
+    {
+        if (Model.IsEditing)
+        {
+            <button id="SaveBtn" class="btn btn-sm btn-primary" title="Save">儲存</button>
+            @Ajax.RawActionLink("取消", "GetCompetition", "Order", new { id = Model.OrderViewModel.Order.ID, block = OrderEditBlock.TeamMember, isEditing = false },
+            new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "TeamMember" }, new { @class = "btn btn-sm btn-default orderCancelBtn" })
+
+            @Html.HiddenFor(model => model.Block)
+        }
+        else
+        {
+            @Ajax.RawActionLink("編輯", "GetCompetition", "Order", new { id = Model.OrderViewModel.Order.ID, block = OrderEditBlock.TeamMember, isEditing = true },
+                new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "TeamMember" }, new { @class = "btn btn-sm btn-success orderEditBtn" })
+        }
+    }
+</h4>
+<hr>
+
+@if (Model.IsEditing)
+{
+    @Html.HiddenFor(model => model.OrderViewModel.Order.ItemID)
+    @Html.HiddenFor(model => model.OrderViewModel.Order.ID)
+}
+
+<table class="tableAutoRow table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>生日</th>
+            <th>性別</th>
+            <th>身分證字號</th>
+            <th>單位</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="TeamMemberTableBody">
+        @* Editing *@
+        @if (Model.IsEditing)
+        {
+            @*@Html.Hidden("Order.ID", Model.OrderViewModel.Order.ID)*@
+
+        if (Model.OrderViewModel.TeamMembers != null)
+        {
+            foreach (var member in Model.OrderViewModel.TeamMembers)
+            {
+                @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "_Competition_TeamMember_row"), member)
+                }
+            }
+        }
+        @* View *@
+        else
+        {
+            if (Model.OrderViewModel.TeamMembers != null)
+            {
+                foreach (var member in Model.OrderViewModel.TeamMembers)
+                {
+                    <tr>
+                        <td>@member.NickName</td>
+                        <td>@member.Birthday.ToDateString()</td>
+                        <td>@(member.Gender.GetDisplayName<GenderType>())</td>
+                        <td>@member.IdentityCard</td>
+                        <td>@member.Unit</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        @if (Model.IsEditing)
+        {
+            <tr>
+                <td colspan="6" style="text-align:center">
+                    @Ajax.RawActionLink("+", "GetCompetitionRow", "Order", new { block = OrderEditBlock.TeamMember },
+    new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "TeamMemberTableBody" }, new { @class = "btn btn-success btn-sm" })
+                </td>
+            </tr>
+        }
+    </tfoot>
+</table>

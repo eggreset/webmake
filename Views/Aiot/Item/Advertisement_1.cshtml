@@ -1,0 +1,22 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="com article_3">
+@if (Model != null)
+{
+    foreach (var item in Model.DataResult.Data)
+    {
+        var mainImage = item.ItemFiles.FirstOrDefault(x => x.SourceType == SourceType.ItemConver);
+        if (mainImage != null)
+        {
+        <div class="aside_ad" style="background-image: url(@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath));">
+            <a href="@item.ItemLanguage.LinkUrl" target="@(item.ItemLanguage.IsBlankUrl ? "_blank" : "_self")">
+                <img src="/html/Aiot/images/ad_blank.png"/>
+            </a>
+        </div>
+        }
+        }
+        }
+    </div>

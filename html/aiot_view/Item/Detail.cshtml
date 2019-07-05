@@ -1,0 +1,152 @@
+﻿@using WabMaker.Web.Helpers
+@using MyTool.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@model WabMaker.Web.WebViewModels.ItemWebViewModel
+@using WabMaker.Web.WebViewModels
+@{
+    ViewBag.Title = Model.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var mainImage = Model.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    var imgUrl = mainImage == null ? "" :
+        (mainImage.FileType == FileType.YouTube) ?
+        _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+        mainImage.FilePath;//封面
+
+    var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemLanguage.Content), 200);
+}
+
+@section meta
+{
+    <meta property="og:title" content="@Model.ItemLanguage.Subject" />
+    <meta property="og:url" content="@RouteHelper.Url(true)" />
+    <meta property="og:image" content="@imgUrl" />
+    <meta property="og:description" content="@description" />
+}
+
+<div id="top" class="top_course">
+    <section id="hero" name="hero" class=h_5">
+
+        <div class="slide_wrap" name="heroslide">
+            <div class="slide_body padd_5">
+                <ul class="slide_mover">
+                    <li class="slide_item" style="width: 100%; z-index: 1;">
+                        <div class="slide_img load-bg-image" data-pc-src="../../../html/Aiot/images/03.jpg" data-tb-src="../../../html/Aiot/images/03.jpg" data-sp-src="../../../html/Aiot/images/03.jpg" style="background-image: url('../../../html/Aiot/images/03.jpg'); width: 1904px;">
+                            <div class="text">
+                                <a>
+                                    <h1>@(Model?.ParentItems?.FirstOrDefault().RouteName)</h1>
+                                </a>
+                                @*<h2>8888888888888888</h2>
+                                <p>999999999999999999999999999</p>*@
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="slide_control" each="pagers"><div class="pager" eq="pagers/0"><a href="#" class=""><div class="line_wrap"><span class="cu_line" style="width: 0%; left: 0px; right: 0px;"></span></div></a></div><div class="pager" eq="pagers/1"><a href="#" class="current"><div class="line_wrap"><span class="cu_line" style="left: auto; width: 100%; right: 0px; overflow: hidden;"></span></div></a></div><div class="pager" eq="pagers/2"><a href="#" class=""><div class="line_wrap"><span class="cu_line" style="left: 0px; width: 0%; right: 0px;"></span></div></a></div><div class="pager" eq="pagers/3"><a href="#" class=""><div class="line_wrap"><span class="cu_line" style="left: 0px; width: 0%; right: 0px;"></span></div></a></div><div class="pager" eq="pagers/4"><a href="#" class=""><div class="line_wrap"><span class="cu_line" style="left: 0px; width: 0%; right: 0px;"></span></div></a></div></div>
+        </div>
+
+    </section>
+
+
+</div>
+
+<div id="container " class="space_top page">
+    <!--======================================文章圖片‧輪播=============================================-->
+    <div class="com wow fadeIn" style="border-bottom-width: 0px;">
+        <figure>
+            <div class="img" style="background-image: url(@imgUrl);background-repeat: no-repeat;background-position: center;background-size: Cover ; ">
+                <img src="~/html/Aiot/images/course_blank.gif" />
+            </div>
+        </figure>
+    </div>
+    <!--======================================文章圖片‧輪播=============================================-->
+    <!--=========================================說明內容=============================================-->
+    <div class="com_page article_3 ">
+        <div class="content_box">
+            <aside>
+                <!--=====================================標題=====================================-->
+                <h1 class="wow fadeInUp">@Model.ItemLanguage.Subject</h1>
+                <!--=====================================日期=====================================-->
+                <div class="day wow fadeInUp"><span>@Model.ItemLanguage.Author</span>@Model.Item.Date.ToDateString("MMM dd, yyyy")</div>
+                <!--=====================================大綱=====================================-->
+                <h2 class="day wow fadeInUP">@Model.ItemLanguage.Subject</h2>
+                <mark class="day wow fadeIn">@description</mark>
+            </aside>
+            <!--=========================================輸入內容=====================================================-->
+            <aside class="wow fadeInUp">
+               @Html.Raw(Model.ItemLanguage.Content)
+            </aside>
+        </div>
+        <!--============================分享=======================================-->
+       @* <div class="icon_box"><i class="fab fa-facebook"></i> <i class="fab fa-twitter-square"></i> <i class="fab fa-instagram"></i> <i class="fab fa-line"></i></div>*@
+        <!--============================分享=======================================-->
+        @*<div class="refer wow fadeInUp">
+            <!--======================作者.筆者=====================================-->
+            <aside id="">
+                <dl>
+                    <dt>
+                        <div class="img" style="background-image: url(images/test_28.jpg);"><img src="images/blank2_2.png"></div>
+                    </dt>
+                    <dd>
+                        <h2>@Model.ItemLanguage.Author</h2>
+                        <p>
+                            江蘇蘇州人，中國當代作家。畢業於北京師範大學中文系，現居南京。主要作品有《妻妾成群》、《飛越我的楓楊樹故鄉》、《罌粟之家》、《米》、《一九三四年的逃亡》、《我的帝王生涯》等。蘇童是中國當代先鋒派新寫實主義代表人物之一，也是當代最具影響力、最受推崇的作家之一，其寫作風格亦頗具爭議。
+                        </p>
+                        <h2>主要作品</h2>
+                        <ul>
+                            <li>
+                                空地上的陽光	1984年	《青年作家》第四期
+                            </li>
+                            <li>白洋淀 宏月亮	1986年	《钟山》第一期</li>
+                            <li>祖母的季節	1986年	《十月》第四期</li>
+                            <li>桑園留念	1987年	《北京文學》第二期</li>
+                            <li>飛越我的楓楊樹故鄉	1987年	《上海文学》第二期</li>
+                            <li>一九三四年的逃亡	1987年	《收穫》第五期</li>
+                            <li>算一算屋頂有幾人	1987年	《鐘山》第五期</li>
+                            <li>藍白染坊</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </aside>
+            <!--======================作者.筆者=====================================-->
+            <!--======================資料參考來源=====================================-->
+            <ul id="">
+                資料參考來源：
+                <li>鄰家花美男TvN官方劇照- http://tvn.interest.me/  </li>
+                <li>劇中截圖-PPS自行截圖</li>
+                <li>甜的"秘密"咖啡-龍山家庭公園 </li>
+                <li>甜的"秘密"咖啡-龍山家庭公園 </li>
+            </ul>
+            <!--======================資料參考來源=====================================-->
+        </div>*@
+        <!--======================關鍵字=====================================-->
+        @{ var keywordArr = Model.ItemLanguage.Keywords?.Split(','); }
+        @if (keywordArr != null)
+        {
+            <div class="key_word">
+                @foreach (var k in keywordArr)
+                {
+                    <span><a href="@Url.Action("Search", "Home", new { q = k })">@k</a></span>
+                }
+            </div>
+        }
+        <!--======================關鍵字=====================================-->
+    </div>
+    <!--================================================內容=========================================================-->
+    <!--======================================[左列表‧右列表]列表:一列2================================================-->
+    @Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Detail_Article_1",
+    ViewName = "Detail_Article_1",
+    PageSize=4,
+    CurrentPage=1,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid>
+        {
+        new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+})
+    <!--==============================================滑動列表4欄=================================================-->
+    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Detail_Get_Partial_Related"))
+</div>

@@ -1,0 +1,122 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@* 比賽報名 *@
+@model WebMaker.Entity.ViewModels.EditOrderViewModel
+@{
+    ViewBag.Title = Model.OrderViewModel.ItemViewModel.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var structure = Model.OrderViewModel.ItemViewModel.Item.cms_Structure;
+    var orderStatus = Model.OrderViewModel.Order.OrderStatus;
+    bool isNew = Model.OrderViewModel.Order.ID == Guid.Empty;
+    //var mainImage = Model.ItemViewModel.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+    //var imgUrl = mainImage == null ? "" :
+    //    (mainImage.FileType == (int)FileType.YouTube) ?
+    //    _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+    //    mainImage.FilePath;//封面
+
+    //var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemViewModel.ItemLanguage.Content), 200);
+    //檔案下載
+    //var filedownloads = Model.ItemViewModel.ItemFiles.Where(x => x.SourceType == (int)SourceType.ItemFile && x.StructureID == new Guid("c3a94bc2-a6be-4f0f-8a99-489abdc153f0")).ToList();
+}
+
+@using (Html.BeginForm("EditCompetition", "Order", new { id = "" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    //新增回到訂單列表, 編輯回同頁url#block
+    <input type="hidden" id="returnUrl" value="@(isNew ? Url.Action("Order", "Member", new { type = structure.ID }) : Url.Action())" />
+    <input type="hidden" id="successMessage" data-title="@ViewBag.Title" value="@MyTool.Enums.MessageType.Confirm" />
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <h3>@ViewBag.Title</h3>
+    if (Model.OrderViewModel.Order.ID != Guid.Empty)
+    {
+        <p>狀態: @(Model.OrderViewModel.Order.OrderStatus.GetDisplayName<OrderStatus>())</p>
+        <p>建立時間: @(Model.OrderViewModel.Order.CreateTime.ToDateString())</p>
+    }
+    <br>
+
+    <div id="BasicInfo">
+        @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "_Competition_BasicInfo"), new EditOrderViewModel { OrderViewModel = Model.OrderViewModel, Block = OrderEditBlock.BasicInfo, IsEditing = isNew })
+    </div>
+
+    <hr>
+    <div id="TeamMember">
+        @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "_Competition_TeamMember"), new EditOrderViewModel { OrderViewModel = Model.OrderViewModel, Block = OrderEditBlock.TeamMember, IsEditing = false })
+    </div>
+
+    <hr>
+    <div id="OrderItem">
+        @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "_Competition_OrderItem"), new EditOrderViewModel { OrderViewModel = Model.OrderViewModel, Block = OrderEditBlock.OrderItem, IsEditing = false })
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            @if (orderStatus == (int)OrderStatus.Editing)
+            {
+                <a id="DeleteBtn" class="btn btn-danger" href="@Url.Action("ChangeStatus", new { id = Model.OrderViewModel.Order.ID, status = OrderStatus.Delete})">刪除</a>
+                <a id="SendBtn" class="btn btn-info" href="@Url.Action("ChangeStatus", new { id = Model.OrderViewModel.Order.ID, status = OrderStatus.New})">送出報名</a>
+            }
+        </div>
+    </div>
+
+}
+@section css{
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+    <style>
+        .teamMemberSelect {
+            min-width: 150px;
+            left: 0 !important;
+        }
+    </style>
+}
+@section scripts{
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script>
+        $(function () {
+
+            $("#DeleteBtn").click(function (e) {
+                e.preventDefault();
+                web.showConfirm('', "確定要刪除嗎?", goToLink, $(this));
+            });
+
+            $("#SendBtn").click(function (e) {
+                e.preventDefault();
+                web.showConfirm('', "確定要送出嗎?", goToLink, $(this));
+            });
+
+            function goToLink($item) {
+                window.location = $item.attr('href');
+            }
+
+            $(document).on("click", ".orderEditBtn", function (e) {
+                $(".orderEditBtn,#DeleteBtn,#SendBtn").attr("disabled", true);
+            });
+
+            $(document).on("click", ".orderCancelBtn", function (e) {
+                $(".orderEditBtn,#DeleteBtn,#SendBtn").attr("disabled", false);
+            });
+
+            web.autoRow.init();
+            @*web.dynamicSelect.data = jQuery.parseJSON('@Html.Raw(Model.OrderViewModel.SelectOptionJson)');*@
+        });
+
+        var SubItemSelectJson = jQuery.parseJSON('@Html.Raw(Model.OrderViewModel.SubItemSelectJson)');
+        var TeamMemberSelectJson = jQuery.parseJSON('@Html.Raw(Model.OrderViewModel.TeamMemberSelectJson)');
+
+        function OnEditCompetition() {
+            $("#OrderItemTableBody tr").each(function (i, item) {
+                web.dynamicSelect.init($(item), ".dynamicItem", SubItemSelectJson);
+                web.dynamicSelect.init($(item), ".teamMemberSelect", TeamMemberSelectJson);
+            });
+        }
+
+        function OnAddCompetitionRow() {
+            web.dynamicSelect.init($("#OrderItemTableBody tr:last"), ".dynamicItem", SubItemSelectJson);
+            web.dynamicSelect.init($("#OrderItemTableBody tr:last"), ".teamMemberSelect", TeamMemberSelectJson);
+        }
+    </script>
+}

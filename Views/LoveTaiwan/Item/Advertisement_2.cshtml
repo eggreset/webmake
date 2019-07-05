@@ -1,0 +1,24 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="social_icon_area clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer-social-area d-flex" style="padding: 15px 0;">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.DataResult.Data)
+                        {
+                            <div class="single-icon">
+                                <a href="@item.ItemLanguage.LinkUrl" target="@(item.ItemLanguage.IsBlankUrl ? "_blank" : "_self")"><span>@item.ItemLanguage.Subject</span></a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

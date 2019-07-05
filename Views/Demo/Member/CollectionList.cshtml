@@ -1,0 +1,61 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WabMaker.Web.WebViewModels.CollectionListModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Structure.OrderName;
+    //包含欄位
+    List<ContentType> ContentTypes = Model.Structure.ContentTypes.ToContainList<ContentType>();
+}
+
+@Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Member", "_MemberMenu"))
+
+<h4>@Model.Structure.CollectionName</h4>
+
+@if (Model.OrderViewModel.OrderDetails != null)
+{
+    foreach (var item in Model.OrderViewModel.OrderDetails)
+    {
+        var mainImage = item.ItemViewModel.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+        <div>
+            <h4>
+                <a href="@Url.Action("Get","Item", new { routeName = item.ItemViewModel.Item.RouteName })" target="_blank">
+                    @item.ItemSubject
+                </a>
+            </h4>
+            @if (mainImage != null)
+            {
+                if (mainImage.FileType == (int)FileType.YouTube)
+                {
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@_YouTube.SetIframe(mainImage.FilePath)" frameborder="0"></iframe>
+                    </div>
+                }
+                else
+                {
+                    <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" width="100" />
+                }
+            }
+            <br>
+            @if (ContentTypes.Contains(ContentType.SalePrice))
+            {
+                @item.SalePrice.ToPrice()
+                <br>
+            }
+            <a class="LinkAjax" href="javascript:" data-title="移除 @(Model.Structure.CollectionName)" 
+               data-url="@Url.Action("RemoveLike", new { itemIDs = item.ItemID })" data-gotourl="@Url.Action()">
+                移除
+            </a>
+        </div>
+        <hr>
+    }
+}
+
+@section scripts{
+    <script>      
+
+    </script>
+}

@@ -1,0 +1,83 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@model OrderViewModel
+@{
+    ViewBag.Title = "訂單";
+    Layout = "../Shared/_Layout_empty.cshtml";
+}
+
+<section class="checkout_area section_gap">
+    <div class="container ">
+        <div class="billing_details mt-5">
+            <div class="row">
+                <div class="col-10 end m-auto" style="border: 2px solid #4f6a35;">
+                    <h2 class="main-title">
+                        @if (Model.Order.OrderStatus == (int)OrderStatus.NonPayment
+                          && Model.Order.PayType == (int)PayType.NewebCreditCard)
+                        {
+                        <span>刷卡失敗，請重新訂購...</span>
+                        }
+                        else
+                        {
+                        <span>我們已經收到您的訂單，感謝您的購買！</span>
+                        }
+                    </h2>
+
+                    <div class="bro-title">
+                        <p>
+                            訂單
+                            @if (Model.Order.OrderStatus == (int)OrderStatus.Processing)
+                            {
+                            <span>已成立</span>
+                            }
+                            else
+                            {
+                            <span>
+                                @(Model.Order.OrderStatus.GetDisplayName<OrderStatus>())
+                            </span>
+                            }
+                        </p>
+
+                        @if (ViewBag.OrderContent != null)
+                        {
+                        @Html.Raw(ViewBag.OrderContent)
+                        <br>
+                        }
+
+                        @if (ViewBag.OrderPayInfo != null)
+                        {
+                        @Html.Raw(ViewBag.OrderPayInfo)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<a href="@Url.Action("Order", "Member", new { type = Model.Order.StructureID })" class="btn btn-info">查看訂單</a>*@
+
+
+@section css{
+    <style>
+        .end {
+            background-color: #f8f4f1;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        
+        .main-title {
+            color: #4f6a35;
+            font-weight: bold;
+        }
+
+        .bro-title {
+            color: #a15d2c;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+}

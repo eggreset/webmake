@@ -1,0 +1,33 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="title_border"><div class="title_box"><h1 class="titlt_inline">最新課程<mark>Course</mark></h1><span class="titlt_inline"><a href="#">活動總覽 <i class="fas fa-angle-double-right"></i></a></span></div></div>
+<div class="block_t20">
+    <div class="com article_3">
+        @if (Model != null)
+    {
+        foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+        <div class="aside_3">
+            <div class="img pic">
+                <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })"><img src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" /></a>
+            </div>
+            <hgroup>
+                <h1><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">@item.ItemLanguage.Subject</a> </h1>
+                <h2>item.ItemLanguage.Description</h2>
+                <p>
+                    @_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)
+                </p>
+                <span class="link_box"><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">more <i class="fas fa-angle-double-right"></i></a></span>
+            </hgroup>
+        </div>
+            }
+        }
+    }
+    </div></div>

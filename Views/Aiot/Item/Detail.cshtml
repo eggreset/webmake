@@ -1,0 +1,94 @@
+﻿@using WabMaker.Web.Helpers
+@using MyTool.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@model WabMaker.Web.WebViewModels.ItemWebViewModel
+@using WabMaker.Web.WebViewModels
+@{
+    ViewBag.Title = Model.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var mainImage = Model.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    var imgUrl = mainImage == null ? "" :
+        (mainImage.FileType == FileType.YouTube) ?
+        _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+        mainImage.FilePath;//封面
+
+    var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemLanguage.Content), 200);
+}
+
+@section meta
+{
+    <meta property="og:title" content="@Model.ItemLanguage.Subject" />
+    <meta property="og:url" content="@RouteHelper.Url(true)" />
+    <meta property="og:image" content="@imgUrl" />
+    <meta property="og:description" content="@description" />
+}
+
+@section MainSlider{
+
+    <div class="hero-gallery js-flickity" data-flickity-options='{ "autoPlay": true }'>
+        <div class="hero-gallery__cell" style="background-image: url(images/top/kv_01.jpg)">
+            <div class="content-wrap text">
+                <h1> @(Model?.ParentItems?.FirstOrDefault()?.RouteName)</h1>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div id="container " class="space_top page">
+    <div class="wrap_box">
+        <!--======================================文章圖片‧輪播=============================================-->
+        <div class="com wow fadeIn" style="border-bottom-width: 0px;">
+            <figure>
+                <div class="img" style="background-image: url(@imgUrl);background-repeat: no-repeat;background-position: center;background-size: Cover ; ">
+                    <img src="~/html/Aiot/images/course_blank.gif" />
+                </div>
+            </figure>
+        </div>
+        <!--======================================文章圖片‧輪播=============================================-->
+        <!--=========================================說明內容=============================================-->
+        <div class="com_page article_3 ">
+            <div class="content_box">
+                <aside>
+                    <!--=====================================標題=====================================-->
+                    <h1 class="wow fadeInUp">@Model.ItemLanguage.Subject</h1>
+                    <!--=====================================日期=====================================-->
+                    <div class="day wow fadeInUp">
+                        <div class="day_info"><span>by：@Model.ItemLanguage.Author</span> @Model.Item.Date.ToDateString("MMM dd, yyyy")</div>
+                        <div class="view">
+                            <a href="#"><i class="fas fa-heart"></i></a> <a href="#"><i class="far fa-eye"></i></a> <a href="#"><i class="fas fa-share-alt"></i></a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <aside class="text_con wow fadeInUp">
+                <!--=====================================文章內容輸入--開始=====================================-->
+                @*<h2 class="day wow fadeInUP">@Model.ItemLanguage.Subject</h2>*@
+
+                @Html.Raw(Model.ItemLanguage.Content)
+
+                <!--=========================================文章內容輸入--結束=====================================================-->
+
+            </aside>
+        </div>
+        <!--======================關鍵字=====================================-->
+        @{ var keywordArr = Model.ItemLanguage.Keywords?.Split(','); }
+        @if (keywordArr != null)
+        {
+            <div class="key_word">
+                @foreach (var k in keywordArr)
+                {
+                    <span><a href="@Url.Action("Search", "Home", new { q = k })">@k</a></span>
+                }
+            </div>
+        }
+        <!--======================關鍵字=====================================-->
+    </div>
+
+    <!--==============================================延伸閱讀=================================================-->
+    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Detail_Get_Partial_Related"))
+</div>
+</div>

@@ -1,0 +1,32 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 延伸閱讀(Detail) *@
+<!--======================================[左列表‧右列表]列表:一列2================================================-->
+@if (Model != null && Model.DataResult.Data.Any())
+{
+<div class="title_border">
+    <div class="  title_box"><h1 class="titlt_inline">延伸閱讀<mark>Recommend</mark></h1><span class="titlt_inline"><a href="#">我要看更多<i class="fas fa-angle-double-right"></i></a></span></div>
+</div><div class="com article_5 wow bounceInUp block_t20" style="margin-bottom: 0px;"">
+    @foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+    <div class="aside_5">
+        <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+            <hgroup>
+                <div class="img"><img src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" width="100%" /></div>
+                <h1>@item.ItemLanguage.Subject</h1>
+                <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)</p>
+            </hgroup>
+        </a>
+    </div>
+            }
+        }
+</div>
+}
+<!--======================================[左列表‧右列表]列表:一列2================================================-->

@@ -1,0 +1,254 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model WebMaker.Entity.ViewModels.OrderViewModel
+@{
+    Layout = null;
+    var structure = Model.Order.cms_Structure;
+}
+
+@using (Html.BeginForm("OneShopPost", "Order", FormMethod.Post))
+{
+    <input type="hidden" id="returnUrl" value="@Url.Action("Pay")" />
+    <input type="hidden" id="successMessage" data-title="@ViewBag.Title" value="@MyTool.Enums.MessageType.Confirm" />
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Order.ItemID)
+    @Html.HiddenFor(model => model.Order.StructureID)
+
+    @*商品列表*@
+    <h4>
+        <span class="label label-primary">商品列表</span>
+    </h4>
+    <table class="table table-striped">
+        <tr>
+            <th>商品</th>
+            <th>優惠價</th>
+            <th width="10%">數量</th>
+            <th>小計</th>
+        </tr>
+        @if (Model.OrderDetails != null)
+        {
+            int count = 0;
+            foreach (var item in Model.OrderDetails)
+            {
+                var mainImage = item.ItemViewModel.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+                <tr>
+                    <td>
+                        @if (mainImage != null)
+                        {
+                            <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" />
+                        }
+                        @item.ItemSubject
+                    </td>
+                    <td>@item.SalePrice.ToPrice()</td>
+                    <td>
+                        @if (item.ItemViewModel.Item.SaleCount >= item.ItemViewModel.Item.StockCount)
+                        {
+                            <span class="text-red">已售完</span>
+                        }
+                        else
+                        {
+                            @Html.Hidden($"OrderDetails[{count}].ItemID", item.ItemID)
+                            var length = Math.Min(item.ItemViewModel.Item.StockCount - item.ItemViewModel.Item.SaleCount, 10);
+                            <select class="form-control select_quantity" name="OrderDetails[@count].Quantity">
+                                @for (int i = 0; i <= length; i++)
+                                {
+                                    <option value="@i" @(item.Quantity == i ? "selected" : "")>@i</option>
+                                }
+                            </select>
+                        }
+                    </td>
+                    <td class="text-right">@((item.SalePrice * item.Quantity).ToPrice())</td>
+                </tr>
+                count++;
+            }
+        }
+        <tr class="info">
+            <td colspan="3" class="text-right">
+                商品總計
+            </td>
+            <td class="text-right">
+                @Model.Order.DetailPrice.ToPrice()
+            </td>
+        </tr>
+
+        @*所有折扣*@
+        @if (Model.OrderDiscounts != null)
+        {
+            foreach (var item in Model.OrderDiscounts)
+            {
+                var discountName = item?.cms_Item?.cms_ItemLanguage.FirstOrDefault().Subject ?? "優惠";
+                <tr>
+                    <td colspan="3" class="text-right">
+                        @(discountName)
+                    </td>
+                    <td class="text-right">
+                        @item.DiscountPrice.ToPrice()
+                    </td>
+                </tr>
+            }
+        }
+
+        @*所有費用*@
+        @if (Model.OrderFees != null)
+        {
+            foreach (var item in Model.OrderFees)
+            {
+                var feeName = item.erp_FeeSetting?.Name ?? "手續費";
+                <tr>
+                    <td colspan="3" class="text-right">
+                        @(feeName)
+                    </td>
+                    <td class="text-right">
+                        @item.FeePrice.ToPrice()
+                    </td>
+                </tr>
+            }
+        }
+
+        <tr class="warning">
+            <td colspan="3" class="text-right">
+                共 @(Model.OrderDetails?.Sum(x => x.Quantity)) 件商品，總金額
+            </td>
+            <td class="text-right">
+                @Model.Order.TotalPrice.ToPrice()
+            </td>
+        </tr>
+    </table>
+
+
+
+    <!----配送方式---->
+    <h4>
+        <span class="label label-primary">配送方式</span>
+    </h4>
+    foreach (var item in structure.DeliveryTypes.ToContainList<DeliveryType>())
+    {
+        <div class="radio">
+            <label>
+                <input type="radio" name="Order.DeliveryType" value="@((int)item)" @(Model.Order.DeliveryType == (int)item ? "checked" : "")
+                       class="radio_ordertype" data-val="true" data-val-required="請選擇配送方式"> @item.GetDisplayName()
+                </label>
+            </div>
+    }
+    @Html.ValidationMessageFor(model => model.Order.DeliveryType, "", new { @class = "text-danger" })
+
+    <!----付款方式---->
+    <h4>
+        <span class="label label-primary">付款方式</span>
+    </h4>
+    foreach (var item in structure.PayTypes.ToContainList<PayType>())
+    {
+        <div class="radio">
+            <label>
+                <input type="radio" name="Order.PayType" value="@((int)item)" @(Model.Order.PayType == (int)item ? "checked" : "")
+                       class="radio_ordertype" data-val="true" data-val-required="請選擇付款方式"> @item.GetDisplayName()
+                </label>
+            </div>
+    }
+    @Html.ValidationMessageFor(model => model.Order.PayType, "", new { @class = "text-danger" })
+
+    <hr>
+    <!----寄送資訊---->
+    <h4>
+        <span class="label label-primary">寄送資訊</span>
+    </h4>
+
+    <div class="form-group">
+        <label>姓名</label>
+        <div>
+            <input type="text" id="Order_ReceiverName" name="Order.ReceiverName" class="" value="@Model.Order.ReceiverName"
+                   data-val="true" data-val-length="不得大於50個字元" data-val-length-max="50" data-val-required="請輸入姓名">
+            @Html.ValidationMessageFor(model => model.Order.ReceiverName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>電話</label>
+        <div>
+            <input type="text" id="Order_ReceiverPhone" name="Order.ReceiverPhone" class="" value="@Model.Order.ReceiverPhone"
+                   data-val="true" data-val-required="請輸入電話">
+            @Html.ValidationMessageFor(model => model.Order.ReceiverPhone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>地址</label>
+        <div id="AddressOption">
+            <select id="CityID" name="Order.ReceiverAddress_CityID" class="dynamicAddress"
+                    data-val="true" data-val-required="請選擇縣市"
+                    data-default="請選擇" data-level="1" data-value="@Model.Order.ReceiverAddress_CityID"></select>
+
+            <select id="RegionID" name="Order.ReceiverAddress_RegionID" class="dynamicAddress"
+                    data-val="true" data-val-required="請選擇鄉鎮市區"
+                    data-default="請選擇" data-level="2" data-value="@Model.Order.ReceiverAddress_RegionID"></select>
+
+            <input id="ZIP" name="Order.ReceiverAddress_ZIP" type="text" style="width:50px" value="@Model.Order.ReceiverAddress_ZIP" />
+
+            @Html.ValidationMessageFor(model => model.Order.ReceiverAddress_CityID, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Order.ReceiverAddress_RegionID, "", new { @class = "text-danger" })
+
+
+            <input type="text" id="Order_ReceiverAddres" name="Order.ReceiverAddress" class="" value="@Model.Order.ReceiverAddress"
+                   data-val="true" data-val-length="不得大於500個字元" data-val-length-max="500" data-val-required="請輸入地址">
+            @Html.ValidationMessageFor(model => model.Order.ReceiverAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <div>
+            <input type="text" id="Order_ReceiverEmail" name="Order.ReceiverEmail" class="" value="@Model.Order.ReceiverEmail"
+                   data-val="true" data-val-length="欄位長度不得大於 200 個字元" data-val-length-max="200"  data-val-required="請輸入Email">
+            @Html.ValidationMessageFor(model => model.Order.ReceiverEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>備註</label>
+        <div>
+            @Html.EditorFor(model => model.Order.OrderNote, new { htmlAttributes = new { @class = "" } })
+            @Html.ValidationMessageFor(model => model.Order.OrderNote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr>
+    <!----發票---->
+    <h4>
+        <span class="label label-primary">發票</span>
+    </h4>
+    <div class="radio">
+        <label>
+            <input type="radio" name="Order.InvoiceType" value="@((int)InvoiceType.Two)" checked>
+            @InvoiceType.Two.GetDisplayName()
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="Order.InvoiceType" value="@((int)InvoiceType.Three)">
+            @InvoiceType.Three.GetDisplayName()
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>發票抬頭</label>
+        <div>
+            @Html.EditorFor(model => model.Order.InvoiceTitle, new { htmlAttributes = new { @class = "" } })
+            @Html.ValidationMessage("Order_InvoiceTitle", "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>統一編號</label>
+        <div>
+            @Html.EditorFor(model => model.Order.InvoiceNumber, new { htmlAttributes = new { @class = "" } })
+            @Html.ValidationMessage("Order_InvoiceNumber", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button id="SaveBtn" type="button" class="btn btn-warning">送出</button>
+    </div>
+}

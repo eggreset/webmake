@@ -1,0 +1,66 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@model WebMaker.Entity.ViewModels.OrderViewModel
+@{ 
+    //唯一明細
+    var detail = Model.OrderDetails.FirstOrDefault(); 
+}
+
+@* 計算金額 *@
+<table class="table table-bordered" style="width:600px;">
+    <thead>
+        <tr class="active">
+            <th width="30%" class="text-center">內容</th>
+            <th width="20%" class="text-center">數量</th>
+            <th width="20%" class="text-center">小計</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>優惠價 @detail.SalePrice.ToPrice()</td>
+            <td class="text-center">
+                @if (Model.ItemViewModel.Item.SaleCount >= Model.ItemViewModel.Item.StockCount)
+                {
+                    <span class="text-red">已售完</span>
+                }
+                else
+                {
+                    @Html.Hidden("OrderDetails[0].ItemID", detail.ItemID)
+                    var length = 5;//Math.Min(item.StockCount - item.SaleCount, item.SaleLimit);
+                    <select id="select_quantity" class="form-control" name="OrderDetails[0].Quantity">
+                        @for (int i = 1; i <= length; i++)
+                        {
+                            <option value="@i" @(detail.Quantity==i?"selected":"")>@i</option>
+                        }
+                    </select>
+                }
+            </td>
+            <td class="text-right" id="subtotal">@((detail.SalePrice * detail.Quantity).ToPrice())</td>
+        </tr>
+      
+        @if (Model.OrderDiscounts != null)
+        {
+            foreach (var item in Model.OrderDiscounts)
+            {
+                var discountName = item?.cms_Item?.cms_ItemLanguage.FirstOrDefault().Subject ?? "優惠";
+                <tr>
+                    <td colspan="2">
+                        <label class="text-primary">@(discountName)</label>  
+                    </td>
+                    <td class="text-right">
+                        <label class="text-primary">@item.DiscountPrice.ToPrice()</label>
+                    </td>
+                </tr>
+            }
+        }
+        
+        <tr class="warning">
+            <td colspan="2">總計</td>
+            <td class="text-right" id="total">@Model.Order.TotalPrice.ToPrice()</td>
+        </tr>
+    </tbody>
+</table>

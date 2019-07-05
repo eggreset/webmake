@@ -1,0 +1,215 @@
+﻿@using MyTool.ViewModels
+@using WabMaker.Web.Helpers
+@using WebMaker.BLL.Helpers
+@using WebMaker.BLL.Services
+@using WabMaker.Web.WebViewModels
+@using MyTool.ViewModels
+@using MyTool.Services
+@using MyTool.Enums
+@{
+    SiteInfoViewModel SiteInfo = ApplicationHelper.SiteInfo;
+    SystemSettingService service = new SystemSettingService();
+    service.ClientID = new Guid("90518588-f30d-49aa-8273-0a29f16ea409");
+    var ClientInfo = service.Get<ClientInfoViewModel>(SystemSettingType.ClientInfo);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AIOT.COM</title>
+    <!-- Stylesheets -->
+    <link href="~/html/Aiot/css/style.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/import.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/noscript.min.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/effect_silde.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/animate.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/style_media.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/css_style.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/app-adae.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="~/html/Aiot/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/html/Aiot/css/style22.css" rel="stylesheet" />
+    <script src="~/html/Aiot/js2/www-widgetapi.js"></script>
+    <script async src="~/html/Aiot/js2/js"></script>
+    <script data-prerender="keep">(function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', intercomSettings); } else { var d = document; var i = function () { i.c(arguments) }; i.q = []; i.c = function (args) { i.q.push(args) }; w.Intercom = i; function l() { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/o3ge867o'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); } if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()</script>
+    <script ID=clientEventHandlersJS LANGUAGE=javascript>
+        function btnDivShow_onclick() {
+            div1.style.display = '';
+        }
+
+        function btnDivH_onclick() {
+            div1.style.display = 'none';
+        }
+
+        function btnDivShow2_onclick() {
+            div2.style.display = '';
+        }
+
+        function btnDivH2_onclick() {
+            div2.style.display = 'none';
+        }
+    </script>
+
+    @RenderSection("css", required: false)
+    @RenderSection("meta", required: false)
+</head>
+
+<body class="index">
+    <form method="post" name="header_search">
+        <div class="wrapper">
+
+            <div id="div1" class="form_box " style="display:none">
+                <div class="link close"> <a href="javascript" id="btnDivH " name="btnDivH" onclick="return btnDivH_onclick()"><i class="far fa-times-circle"></i></a></div>
+                <div class="search_box">
+
+                    <label for="header_search_query" class="sr-only">Search Icons:</label>
+                    <div class="relative white">
+                        <input id="header_search_query" type="search" name="header_search_query" placeholder="Search icons..." class="input-reset black-90 input-focus all-animate br-pill ph4 sans-serif fw6 header-search-input ba bw1  bg-white-10 b--transparent">
+                        <button type="submit" name="header_search_submit" class="button-reset color-inherit db o-80 absolute center-v right-1 glow hover-orange8">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-search fa-w-16 fa-fw">
+                                <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" class="">
+                                </path>
+                            </svg><span class="sr-only">Search!</span>
+                        </button>
+
+                    </div>
+                    <button type="submit" name="header_search_submit" class="sr-only">Search!</button>
+                </div>
+            </div>
+
+
+
+            <!--===================================top_選單================================================-->
+            @Html.Action("Menu", "Item", new { position = MyTool.Enums.MenuPosition.Top })
+
+            <div class="nav_back"></div>
+
+            <!--===================================主圖輪播================================================-->
+            @RenderSection("MainSlider", required: false)
+
+        </div>
+        @RenderBody()
+
+
+
+        <!--======================================FOOTRE================================================-->
+        <footer id="footer">
+            <div class="pagetop"><span>PAGE TOP</span></div>
+            <div class="footer_container com_article">
+                <div class="footer_container--credit aside_7">
+                    <div class="footer_logo">
+                        <a href="#"><img src="~/html/Aiot/images/aiot_logo.png"></a>
+                    </div>
+                    @if (ClientInfo != null)
+                    {
+                        <p>
+                            Add｜@ClientInfo.Data.Address<br>
+                            Tel.@ClientInfo.Data.Phone<br>
+                            Fax.@ClientInfo.Data.Phone
+                        </p>
+                    }
+                </div>
+                <div class="footer_container--nav aside_7">
+                    @Html.Action("Menu", "Item", new { position = MyTool.Enums.MenuPosition.Bottom })
+                    <div class="footer_container--credit width">
+                        <ul class="footer_sns">
+                            <li class="btn twitter"><a href="https://twitter.com/shirokuma014" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            @if (!string.IsNullOrEmpty(SiteInfo.Facebook))
+                            {
+                                <li class="btn facebook"><a href="@SiteInfo.Facebook" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(SiteInfo.Instagram))
+                            {
+                                <li class="btn instagram"><a href="@SiteInfo.Instagram" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            }
+                            <li class="btn line"><a href="https://page.line.me/oic-okayama" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div class="copyright"><p>@(SiteInfo?.Copyright)</p></div>
+    </form>
+
+    <script src="~/html/Aiot/js/jquery-2.1.4.min.js"></script>
+    <script src="~/html/Aiot/js/TweenMax.min.js"></script>
+    <script src="~/html/Aiot/js/jquery-ui.min.js"></script>
+    <script src="~/html/Aiot/js/jquery.easing.1.3.js"></script>
+    <script src="~/html/Aiot/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/html/Aiot/js/jquery.matchHeight.js"></script>
+    <script src="~/html/Aiot/js/common.js"></script>
+    <script src="~/html/Aiot/js/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script>
+    <script src="~/html/Aiot/js2/jquery.js"></script>
+    <script src="~/html/Aiot/js2/polaris.js"></script>
+    <script src="~/html/Aiot/js2/canopus.js"></script>
+    <script src="~/html/Aiot/js2/app.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js'></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.mhn-slide').owlCarousel({
+                nav: true,
+                //loop:true,
+                slideBy: 'page',
+                rewind: false,
+                responsive: {
+                    0: { items: 1 },
+                    480: { items: 2 },
+                    600: { items: 2 },
+                    1000: { items: 3 }
+                },
+                smartSpeed: 70,
+                onInitialized: function (e) {
+                    $(e.target).find('img').each(function () {
+                        if (this.complete) {
+                            $(this).closest('.mhn-inner').find('.loader-circle').hide();
+                            $(this).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                        } else {
+                            $(this).bind('load', function (e) {
+                                $(e.target).closest('.mhn-inner').find('.loader-circle').hide();
+                                $(e.target).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                            });
+                        }
+                    });
+                },
+                navText: ['<i class="fas fa-chevron-circle-left"></i>', '<i class="fas fa-chevron-circle-right"></i>']
+            });
+        });
+        $(function () {
+            $('.mhn-slide2').owlCarousel({
+                nav: true,
+                //loop:true,
+                slideBy: 'page',
+                rewind: false,
+                responsive: {
+                    0: { items: 1 },
+                    480: { items: 1 },
+                    600: { items: 1 },
+                    1000: { items: 3 }
+                },
+                smartSpeed: 70,
+                onInitialized: function (e) {
+                    $(e.target).find('img').each(function () {
+                        if (this.complete) {
+                            $(this).closest('.mhn-inner').find('.loader-circle').hide();
+                            $(this).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                        } else {
+                            $(this).bind('load', function (e) {
+                                $(e.target).closest('.mhn-inner').find('.loader-circle').hide();
+                                $(e.target).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                            });
+                        }
+                    });
+                },
+                navText: ['<i class="fas fa-chevron-circle-left"></i>', '<i class="fas fa-chevron-circle-right"></i>']
+            });
+        });
+    </script>
+</body>
+</html>

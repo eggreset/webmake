@@ -1,0 +1,104 @@
+﻿@using MyTool.Enums
+@model WebMaker.Entity.ViewModels.SendEmailViewModel
+@{
+    Layout = null;
+    //ViewBag.Title; //忘記密碼、重寄驗證信
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>會員中心 | 幸福台灣</title>
+    <!-- Favicon -->
+    <link rel="icon" href="http://www.inspire-love.com/favicon.ico">
+    <!-- Core Stylesheet -->
+    <link href="~/html/LoveTaiwan/style.css" rel="stylesheet" />
+    <!-- Responsive CSS -->
+    <link href="~/html/LoveTaiwan/css/responsive/responsive.css" rel="stylesheet" />
+</head>
+
+<body class="login-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="login-box">
+                    <div class="login-header text-center">
+                        <div class="login-logo ">
+                            <a href="@Url.Action("Index", "Home")" title="幸福台灣 Cultural Launch">幸福台灣</a>
+                        </div>
+                        <div class="login-box-title"></div>
+                    </div>
+                    @using (Html.BeginForm("SendValidCode", "Member", FormMethod.Post, new { @class = "form-member form-login" }))
+                    {
+                        <input type="hidden" id="returnUrl" value="@Url.Action("Login", "Member", new  { })" />
+                        <input type="hidden" id="successMessage" data-title="@ViewBag.Title" value="@MyTool.Enums.MessageType.Confirm" />
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @Html.HiddenFor(model => model.SystemMailType)
+                        @Html.HiddenFor(model => model.ValidType)
+
+                        <div class="form-group  text-center">
+                            <label>@(ViewBag.Title == "重寄驗證信" ? "未收到認證信？" : "忘記密碼？")</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="login-input-box">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "login-input100 form-control", placeholder = "請填入註冊時使用的Email信箱" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="login-input-box">
+                                @Html.TextBoxFor(model => model.Captcha, "", new { @class = "form-control", placeholder = "驗證碼", autocomplete = "off" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <div class="login-input-box">
+                                <img class="imgverifycode" src="@Url.Action("CaptchaImage","Member")" alt="驗證碼" />
+                                <a class="btnnewcode" href="javascript:">重新產生驗證碼</a>
+                            </div>
+                        </div>
+                        <div class="divide20"></div>
+                        <button id="SaveBtn" type="button" class="btn btn-green btn-lg btn-block">
+                            @if (ViewBag.Title == "重寄驗證信")
+                            {
+                                @:重新寄送認證信
+                                <i class="fa fa-paper-plane margin-L-5 " aria-hidden="true"></i>
+                            }
+                            else
+                            {
+                                @:重設密碼
+                                <i class="fa fa-key margin-L-5 " aria-hidden="true"></i>
+                            }
+                        </button>
+                    }
+                    <div class="divide20"></div>
+                    <div class="text-center login-text">
+                        <p>
+                            <a href="javascript:history.go(-1)">回上一頁</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery-2.2.4 js -->
+    <script src="~/html/LoveTaiwan/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/html/LoveTaiwan/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap-4 js -->
+    <script src="~/html/LoveTaiwan/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins JS -->
+    <script src="~/html/LoveTaiwan/js/others/plugins.js"></script>
+    <!-- Active JS -->
+    <script src="~/html/LoveTaiwan/js/active.js"></script>
+    @Html.Partial("_ShowMessage")
+    @Html.Partial("_BaseScripts")
+</body>

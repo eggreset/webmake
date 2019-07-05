@@ -1,0 +1,53 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WabMaker.Web.WebViewModels.CollectionListModel
+
+<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+    @if (Model.ItemList != null)
+    {
+        <span class="badge">@Model.ItemList.Sum(x => x.CarQuantity)</span>
+    }
+    購物車
+</a>
+
+<ul class="dropdown-menu" role="menu">
+    @if (Model.ItemList != null)
+    {
+        <li class="dropdown-header">
+            @foreach (var item in Model.ItemList)
+            {
+                var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+                <div>
+                    @if (mainImage != null)
+                    {
+                        <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" width="60" />
+                    }
+
+                    <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+                        @item.ItemLanguage.Subject
+                    </a>
+
+                    x @item.CarQuantity
+
+                    <a class="LinkAjax text-danger" href="javascript:" data-title="移除 購物車"
+                       data-url="@Url.Action("RemoveCar","Order", new { itemIDs = item.Item.ID })" data-gotourl="@Url.Action()">
+                        移除
+                    </a>
+                </div>
+                <hr>
+            }
+        </li>
+        <li><a class="btn" href="@Url.Action("ShoppingCart","Order")">前往結帳</a></li>
+    }
+    else
+    {
+        <li>
+            尚無商品
+        </li>
+    }
+</ul>
+

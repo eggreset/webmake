@@ -1,0 +1,31 @@
+﻿@model List<WabMaker.Web.WebViewModels.TreeWebViewModel>
+
+@GenerateTree(Model)
+
+@helper GenerateTree(List<WabMaker.Web.WebViewModels.TreeWebViewModel> nodes, int level = 1)
+{
+
+if (nodes != null)
+{
+    foreach (var item in nodes)
+    {
+        if (level == 2)
+        {
+                <a class="dropdown-item" href="@item.Url">@item.Name</a>
+            continue;
+        }
+        bool hasChild = item.Nodes != null && item.Nodes.Any();
+            <li class="nav-item @(hasChild ? "dropdown" : "")">
+                <a class="nav-link @(hasChild ? "dropdown-toggle" : "")" href="@(item.Name!="活動講座"?item.Url:item.Url+"?specViewName=ListCourse")" @(hasChild ? "id='yummyDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'" : "")>@item.Name</a>
+                @if (hasChild)
+                {
+                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                        @GenerateTree(item.Nodes, level + 1)
+                    </div>
+                }
+            </li>
+    }//end foreach
+
+}
+
+}

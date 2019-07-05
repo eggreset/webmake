@@ -1,0 +1,62 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WabMaker.Web.WebViewModels.CollectionListModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Structure.OrderName;
+    //包含欄位
+    List<ContentType> ContentTypes = Model.Structure.ContentTypes.ToContainList<ContentType>();
+}
+
+<h3>購物車</h3>
+
+<table class="table table-striped">
+    <tr>
+        <th>商品</th>
+        <th>優惠價</th>
+        <th width="10%">數量</th>
+        <th>小計</th>
+        <th>變更</th>
+    </tr>
+    @if (Model.ItemList != null)
+    {
+        foreach (var item in Model.ItemList)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            <tr>
+                <td>
+                    @if (mainImage != null)
+                    {
+                        <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" width="60" />
+                    }
+                    <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+                        @item.ItemLanguage.Subject
+                    </a>
+                </td>
+                <td>@item.Item.SalePrice.ToPrice()</td>
+                <td><input type="number" class="form-control" value="@item.CarQuantity" /></td>
+                <td></td>
+                <td>
+                    <a class="LinkAjax text-danger" href="javascript:" data-title="移除 購物車"
+                       data-url="@Url.Action("RemoveCar","Order", new { itemIDs=item.Item.ID })" data-gotourl="@Url.Action()">
+                        移除
+                    </a>
+                </td>
+            </tr>
+
+        }
+    }
+
+</table>
+
+<a href="@Url.Action("Index","Pay",new { id=Guid.Empty})" class="btn btn-success">去結帳</a>
+
+@section scripts{
+    <script>
+
+
+    </script>
+}

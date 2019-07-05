@@ -1,0 +1,29 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="single-widget-area popular-post-widget">
+    <div class="widget-title text-center">
+        <h6>熱門課程</h6>
+    </div>
+    @if (Model != null)
+    {
+        foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles.FirstOrDefault(x => x.SourceType == SourceType.ItemConver);
+            if (mainImage != null)
+            {
+                <div class="single-populer-post d-flex">
+                    <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" alt="">
+                    <div class="post-content">
+                        <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+                            <h6>@item.ItemLanguage.Subject</h6>
+                        </a>
+                        <p>@item.Item.Date.ToDateString("dddd, MMMM dd, yyyy")</p>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>

@@ -1,0 +1,21 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="single-widget-area about-me-widget text-center">
+    @if (Model!=null && Model.DataResult.Data.Any())
+    {
+        <div class="widget-title">
+            <h6>達人客座 </h6>
+        </div>
+        <div class="about-me-widget-thumb">
+            <img src="@RouteHelper.SetImagePath(@Model.DataResult.Data.FirstOrDefault().ItemFiles.FirstOrDefault().FilePath,
+                 @Model.DataResult.Data.FirstOrDefault().ItemFiles.FirstOrDefault().ThumbnailPath)" alt="">
+        </div>
+        <h4 class="font-shadow-into-light">@Model.DataResult.Data.FirstOrDefault().ItemLanguage.Subject</h4>
+        <p>@Model.DataResult.Data.FirstOrDefault().ItemLanguage.Description</p>
+    }
+</div>
+
+

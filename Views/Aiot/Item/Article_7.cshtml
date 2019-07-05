@@ -1,0 +1,33 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 編輯精選 *@
+@if (Model != null && Model.DataResult.Data.Any())
+{
+    <div class="title_border">
+        <div class="title_box">
+            <h1 class="titlt_inline">編輯精選<mark>Recommend</mark></h1><span class="titlt_inline"></span>
+        </div>
+    </div>
+    <div class="com article_5 wow bounceInUp block_t20" style="margin-bottom: 0px;">
+        @foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+                <div class="aside_5">
+                    <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+                        <hgroup>
+                            <div class="img pic_size" style="background-image:url(@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)))"><img src="~/html/Aiot/images/blank_500x255.png" width="100%" /></div>
+                            <h1>@_Html.WordSubstring(item.ItemLanguage.Subject, 38)</h1>
+                            <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)</p>
+                        </hgroup>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+}

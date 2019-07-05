@@ -1,0 +1,73 @@
+﻿@using WabMaker.Web.Helpers
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@model WabMaker.Web.WebViewModels.ItemWebViewModel
+@{
+    ViewBag.Title = Model.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var mainImage = Model.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    var imgUrl = mainImage == null ? "" :
+        (mainImage.FileType == FileType.YouTube) ?
+        _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+        mainImage.FilePath;//封面
+
+    var thumbUrl = mainImage == null ? "" :
+     (mainImage.FileType == FileType.YouTube) ?
+     _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+     RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath);//封面
+
+    var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemLanguage.Content), 200);
+}
+@section meta
+{
+    <meta property="og:title" content="@Model.ItemLanguage.Subject" />
+    <meta property="og:url" content="@RouteHelper.Url(true)" />
+    <meta property="og:image" content="@thumbUrl" />
+    <meta property="og:description" content="@description" />
+}
+@if (mainImage != null)
+{
+    <img src="@imgUrl" width="100" />
+}
+<h2>@Model.ItemLanguage.Subject</h2>
+
+描述 @_Html.BreakLine(Model.ItemLanguage.Description)<br>
+
+原價 <s>$@Model.Item.OriginalPrice.ToString("0")</s><br>
+優惠價 $@Model.Item.SalePrice.ToString("0")<br>
+
+@using (Html.BeginForm("AddCar", "Order", new { itemID = Model.Item.ID }, FormMethod.Get, new { @class = "form-inline", style = "display: inline;" }))
+{
+    <input type="hidden" id="returnUrl" value="@Url.Action()" />
+    <input type="hidden" id="successMessage" data-title="加入購物車" value="@MyTool.Enums.MessageType.Toast" />
+
+    <input class="form-control isnumber" type="text" value="1" name="quantity" style="width:80px;">
+    <button type="submit" id="SaveBtn" class="btn btn-success">加入購物車</button>
+}
+
+@* 加入收藏 *@
+@{
+    var addlikeUrl = Url.Action("AddLike", "Member", new { itemID = Model.Item.ID });
+}
+@if (WebMaker.BLL.Helpers.SessionManager.UserID != Guid.Empty && WebMaker.BLL.Helpers.SessionManager.AccountType == AccountType.Member)
+{
+    <a class="btn btn-warning LinkAjax" data-url="@addlikeUrl" data-title="加入收藏">加入收藏</a>
+}
+else
+{
+    <a class="btn btn-warning " href="@Url.Action("Login", "Member", new { url=Url.Action()})">加入收藏</a>
+}
+
+<hr>
+@Html.Raw(Model.ItemLanguage.Content)
+
+@section Scripts {
+    <script>
+       web.checkType();
+    </script>
+}
+
+
+

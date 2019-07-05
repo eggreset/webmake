@@ -1,0 +1,48 @@
+﻿@using MyTool.Enums
+@using MyTool.Services
+@using WabMaker.Web.Helpers
+@model WebMaker.Entity.ViewModels.OrderPageResult
+
+@foreach (var item in Model.DataResult.Data)
+{
+    <div class="row">
+        <div class="col-md-10 col-sm-9 col-xs-12">
+            <div class="member-course-info" style="padding:20px;">
+                <div class="member-order-title">
+                    <a href="detail.html" title="@item.ItemViewModel.ItemLanguage.Subject" target="_blank">@item.ItemViewModel.ItemLanguage.Subject</a>
+                    @if (item.Order.OrderStatus.GetDisplayName<OrderStatus>() == "待確認")
+                    {
+                        <span class="label label-no-payment">未繳費</span>
+                    }
+                    else if (item.Order.OrderStatus.GetDisplayName<OrderStatus>() == "處理中")
+                    {
+                        <span class="label label-payment">已付款</span>
+                    }
+                    else
+                    {
+                    <span class="label label-free">免繳費</span>
+                    }
+                </div>
+                <div class="member-course-date">
+                    <i class="fa fa-clock-o margin-R-5" aria-hidden="true"></i>下單日期：@item.Order.CreateTime.ToString("yyyy/MM/dd (ddd)")
+                    <br>
+                    <i class="fa fa-file-text-o margin-R-5" aria-hidden="true"></i>訂單編號：@item.Order.OrderNumber
+                </div>
+                <div class="member-order-amount">
+                    <span class="number">NT$@item.Order.TotalPrice.ToString("0")</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-12">
+            <div class="member-course-info btn-margin-15" style="padding:20px;">
+                <!-- Button trigger modal -->
+                @*<button type="button" class="btn btn-green btn-block " data-toggle="modal" data-target="#myTicket">
+                    快速取票
+                </button>*@
+
+                <br>
+                <a class="btn btn-gray btn-block " href="@Url.Action("SignUpInfo","Order",new { id=item.Order.ID})" role="button">報名資料</a>
+            </div>
+        </div>
+    </div>
+}

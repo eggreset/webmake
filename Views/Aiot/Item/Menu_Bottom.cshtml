@@ -1,0 +1,19 @@
+﻿@model List<WabMaker.Web.WebViewModels.TreeWebViewModel>
+
+<ul class="clearfix ">
+    @GenerateTree(Model)
+</ul>
+
+    @helper GenerateTree(List<WabMaker.Web.WebViewModels.TreeWebViewModel> nodes, int level = 1)
+    {
+
+if (nodes != null)
+{
+    foreach (var item in nodes)
+    {
+            <li>
+                <div><a href="@item.Url"><span>@item.Name</span></a></div>
+            </li>
+    }
+}
+}

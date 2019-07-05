@@ -1,0 +1,40 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<div class="com article_3 block_t40">
+
+    <div class="aside_2">
+        <div class="mov">
+            @{
+                var firstitem = Model?.DataResult.Data.FirstOrDefault()?.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+                if (firstitem != null)
+                {
+                    <iframe src="@_YouTube.SetIframe(firstitem.FilePath)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="aside_2">
+        <div class="title_border">
+            <div class="  title_box"><h2 class="titlt_inline">創新好讀<mark>Read </mark></h2><span class="titlt_inline"><a href="#">看更多<i class="fas fa-angle-double-right"></i></a></span></div>
+        </div>
+        @if (Model != null)
+        {
+            foreach (var item in Model.DataResult.Data)
+            {
+                var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+                if (mainImage != null)
+                {
+        <hgroup>
+            <div class="img pic_size" style="background-image: url(@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)));"><img src="/html/Aiot/images/blank_500x315.png" width="100%" /></div>
+            <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })"><h1>@item.ItemLanguage.Subject</h1></a>
+            <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)<i class="fas fa-angle-double-right" style="color:#666;"></i></p>
+        </hgroup>
+                }
+            }
+        }
+    </div>
+</div>

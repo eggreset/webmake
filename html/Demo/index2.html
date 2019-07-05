@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+    let datas = null;
+    fetch('http://cms.xnet.world/api/Menu?position=1')
+        .then(response => response.json())
+        .then(response => {
+            getData(response);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+    function getData(data) {
+        datas = data.Data[1];
+        fetch('http://cms.xnet.world/api/ListInfo?routeName=' + datas['RouteName'])
+            .then(response => response.json())
+            .then(response => {
+                getData1(response.Data.ItemPageModel);
+            })
+    }
+
+    function getData1(data) {
+        datas = data;
+        fetch('http://cms.xnet.world/api/PartialList', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(datas)
+            })
+            .then(response => response.json())
+            .then(response => {
+                getdata2(response);
+            })
+    }
+    function getdata2(data){
+    	datas = data.Data.DataResult.Data[0].Item.RouteName;
+    	fetch('http://cms.xnet.world/api/Detail?routeName='+datas)
+    	.then(response => response.json())
+        .then(response => {
+        	console.log(response);
+        	console.log('ya');
+        })
+
+    }
+    </script>
+</body>
+
+</html>

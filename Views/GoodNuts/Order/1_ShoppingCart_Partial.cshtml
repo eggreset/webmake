@@ -1,0 +1,106 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@using System.Dynamic
+@model  WabMaker.Web.WebViewModels.CollectionListModel
+@{
+    Layout = null;
+    //包含欄位
+    List<ContentType> ContentTypes = Model.Structure.ContentTypes.ToContainList<ContentType>();
+}
+
+<table class="table table-striped">
+    <tr>
+        <th></th>
+        <th>商品</th>
+        <th>優惠價</th>
+        <th width="10%">數量</th>
+        <th>小計</th>
+    </tr>
+
+    @*// 明細*@
+    @foreach (var detail in Model.OrderViewModel.OrderDetails)
+    {
+        var mainImage = detail.ItemViewModel.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+        <tr>
+            <td>
+                <a class="LinkAjax text-danger deletecar" href="javascript:" data-title="移除 購物車"
+                   data-url="@Url.Action("RemoveCar", "Order", new { itemIDs = detail.ItemID })" data-gotourl="@Url.Action()">
+                    刪除
+                </a>
+            </td>
+            <td>
+                @if (mainImage != null)
+                {
+                <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" width="60" />
+                }
+                <a href="@Url.Action("Get", "Item", new { routeName = detail.ItemViewModel.Item.RouteName })">
+                    @detail.ItemSubject
+                </a>
+            </td>
+            <td>
+                @detail.SalePrice.ToPrice()
+                @{
+                    //顯示此商品的折扣
+                    var discounts = Model.OrderViewModel.OrderDiscounts.Where(x => x.OrderDetailID == detail.ID).ToList();
+                }
+                @if (discounts.Any())
+                {
+                <div>
+                    符合折扣
+                    @foreach (var item in discounts)
+                        {
+                            var discountName = item?.cms_Item?.cms_ItemLanguage.FirstOrDefault().Subject ?? "優惠";
+                    <label class="text-success">@(discountName)</label>
+                        }
+                </div>
+                }
+            </td>
+            <td><input type="text" class="form-control carquantity isnumber" value="@detail.Quantity" data-id="@detail.ItemID" data-value="@detail.Quantity" /></td>
+            <td class="text-right">
+                @((detail.SalePrice * detail.Quantity).ToPrice())
+            </td>
+        </tr>
+                    }
+
+    <tr class="info">
+        <td colspan="4" class="text-right">
+            商品總計
+        </td>
+        <td class="text-right">
+            @Model.OrderViewModel.Order.DetailPrice.ToPrice()
+        </td>
+    </tr>
+
+    @*所有折扣*@
+    @foreach (var item in Model.OrderViewModel.OrderDiscounts)
+    {
+        var discountName = item?.cms_Item?.cms_ItemLanguage.FirstOrDefault().Subject ?? "優惠";
+        <tr>
+            <td colspan="4" class="text-right">
+                @(discountName)
+            </td>
+            <td class="text-right">
+                @item.DiscountPrice.ToPrice()
+            </td>
+        </tr>
+    }
+
+    <tr class="warning">
+        <td colspan="4" class="text-right">
+            共 @(Model.OrderViewModel.OrderDetails?.Sum(x => x.Quantity)) 件商品，總金額
+        </td>
+        <td class="text-right">
+            @Model.OrderViewModel.Order.TotalPrice.ToPrice()
+        </td>
+    </tr>
+
+</table>
+
+@if (Model.OrderViewModel.OrderDetails.Any())
+{
+    <div class="text-right">
+        <a href="/" class="btn btn-default">繼續購物</a>
+        <a href="@Url.Action("Checkout")" class="btn btn-warning">去結帳</a>
+    </div>
+}

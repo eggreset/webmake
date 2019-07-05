@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="img/favicon.png" type="image/png" />
+  <title>嚼世好堅｜商品資訊</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="vendors/linericon/style.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/themify-icons.css" />
+  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+  <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+  <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+  <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+  <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+  <!-- main css -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/main.css?v=4">
+</head>
+
+<body>
+  <!--================Header Menu Area =================-->
+  <header class="header_area">
+
+  </header>
+  <!--================Header Menu Area =================-->
+
+  <!--================Home Banner Area =================-->
+  <section class="banner_area pagination-banner ">
+    <div class="banner_mask d-flex align-items-center ">
+      <div class="container">
+        <div class="banner_content d-md-flex justify-content-between align-items-center">
+          <div class="mb-3 mb-md-0">
+            <h2>嚼世好堅</h2>
+            <p>不容錯過</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Home Banner Area =================-->
+
+  <!--================Single Product Area =================-->
+  <div class="product_image_area">
+    <div class="container">
+      <div class="row s_product_inner">
+        <div class="col-lg-6">
+          <div class="s_product_img">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+                  <img style="width: 100%;" src="./img/product/sport.jpg" alt="">
+                </li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1">
+                  <img style="width: 100%;" src="./img/product/grow.jpg" alt="">
+                </li>
+                </li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2">
+                  <img style="width: 100%;" src="./img/product/beauty.jpg" alt="">
+                </li>
+                </li>
+              </ol>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img style="width: 100%;" src="./img/product/sport.jpg" alt="">
+                  </li>
+                </div>
+                <div class="carousel-item">
+                  <img style="width: 100%;" src="./img/product/grow.jpg" alt="">
+                  </li>
+                </div>
+                <div class="carousel-item">
+                  <img style="width: 100%;" src="./img/product/beauty.jpg" alt="">
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 offset-lg-1">
+          <div class="s_product_text">
+            <h3>綜合堅果-薄鹽</h3>
+            <h2>$149</h2>
+            <ul class="list">
+              <li>
+                <a class="active" href="#">
+                  <span>類型</span> : 成長</a>
+              </li>
+              <li>
+                <a href="#"> <span>庫存</span> : 充足</a>
+              </li>
+            </ul>
+            <p>
+              8小時低溫烘焙，鎖住堅果營養<br>
+              添加納豆菌及乳酸菌，健康再升級<br>
+              技術研發30餘年，堅持做最佳品質<br>
+            </p>
+            <div class="product_count">
+              <label for="qty">數量:</label>
+              <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                class="input-text qty" />
+              <button
+                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                class="increase items-count" type="button">
+                <i class="lnr lnr-chevron-up"></i>
+              </button>
+              <button
+                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                class="reduced items-count" type="button">
+                <i class="lnr lnr-chevron-down"></i>
+              </button>
+            </div>
+            <div class="card_area">
+              <a class="main_btn" href="#">加入購物車</a>
+              <a class="icon_btn" href="#">
+                <i class="lnr lnr lnr-heart"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--================End Single Product Area =================-->
+
+  <!--================Product Description Area =================-->
+  <section class="product_description_area">
+    <div class="container">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">商品簡介</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">商品標示</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+            aria-selected="false">食用資訊</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+            aria-selected="false">注意事項</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <p>
+            堅果是植物的一類果實，通常用來泛指果皮堅硬的乾果類，依植物學的定義，堅果是指由堅硬的果皮和種子組成的果實，且在果實成熟時果皮不開裂。但在日常的定義下，只要有堅硬外殼、油性的果仁就會稱為堅果。 大部份果實中的種子可以自然的和殼分開，但像榛子、栗子及橡子等堅果，其硬殼包住種子，不易將硬殼和種子分開。
+          </p>
+          <p>
+            
+          </p>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <h5>寬度</h5>
+                  </td>
+                  <td>
+                    <h5>128mm</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>高度</h5>
+                  </td>
+                  <td>
+                    <h5>508mm</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>深度</h5>
+                  </td>
+                  <td>
+                    <h5>85mm</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>重量</h5>
+                  </td>
+                  <td>
+                    <h5>52g</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>熱量 (kcal)</h5>
+                  </td>
+                  <td>
+                    <h5>606</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>質量檢查</h5>
+                  </td>
+                  <td>
+                    <h5>有</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>保存期限</h5>
+                  </td>
+                  <td>
+                    <h5>3天內</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>製造日期</h5>
+                  </td>
+                  <td>
+                    <h5>2019年</h5>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <div>
+            <p>1. 涮嘴的健康零食<br>
+            根據衛生署建議一日堅果攝取量約30克左右！比起精緻的烘焙餅乾甜點，堅果熱量少多了，更是好的油脂，更適合常常坐著嘴饞的上班族。<br>
+            2. 早餐就愛搭堅果，跟麥片最搭！<br>
+            讓一天的開始精神百倍；堅果、核桃更有助於增強體力讓精神旺盛，對於每個人來說，是再好不過的選擇！<br>
+            3. 加入優格更美味<br>
+            運動健身後，將團圓堅果加入優格中，具飽足感、又健康（更有助於排便順暢的效果），好處真是多到說不完啊！<br></p>
+          </div>
+        </div>
+        <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+          <div>
+            <p>
+              注意事項
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Product Description Area =================-->
+
+  <!--================ start footer Area  =================-->
+  <footer id="footer-area">
+
+  </footer>
+  <!--================ End footer Area  =================-->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/stellar.js"></script>
+  <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+  <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+  <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+  <script src="vendors/isotope/isotope-min.js"></script>
+  <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+  <script src="js/jquery.ajaxchimp.min.js"></script>
+  <script src="js/mail-script.js"></script>
+  <script src="vendors/jquery-ui/jquery-ui.js"></script>
+  <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+  <script src="vendors/counter-up/jquery.counterup.js"></script>
+  <script src="js/theme.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".header_area").load('header.html');
+      $("#footer-area").load('footer.html');
+    });
+  </script>
+</body>
+
+</html>

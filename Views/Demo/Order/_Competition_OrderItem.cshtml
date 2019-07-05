@@ -1,0 +1,116 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.Entity.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@* 比賽報名-項目與組別 *@
+@model WebMaker.Entity.ViewModels.EditOrderViewModel
+@{
+    var structure = Model.OrderViewModel.ItemViewModel.Item.cms_Structure;
+    //訂單狀態(Editing才可編輯)
+    var orderStatus = Model.OrderViewModel.Order.OrderStatus;
+}
+
+<h4>
+    比賽項目與組別
+    @if (orderStatus == (int)OrderStatus.Editing)
+    {
+        if (Model.IsEditing)
+        {
+            <button id="SaveBtn" class="btn btn-sm btn-primary" title="Save">儲存</button>
+            @Ajax.RawActionLink("取消", "GetCompetition", "Order", new { id = Model.OrderViewModel.Order.ID, block = OrderEditBlock.OrderItem, isEditing = false },
+                new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "OrderItem" }, new { @class = "btn btn-sm btn-default orderCancelBtn" })
+
+            @Html.HiddenFor(model => model.Block)
+        }
+        else
+        {
+            @Ajax.RawActionLink("編輯", "GetCompetition", "Order", new { id = Model.OrderViewModel.Order.ID, block = OrderEditBlock.OrderItem, isEditing = true },
+                new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "OrderItem", OnSuccess = "OnEditCompetition()" }, new { @class = "btn btn-sm btn-success orderEditBtn" })
+        }
+    }
+</h4>
+<hr>
+
+@if (Model.IsEditing)
+{
+    @Html.HiddenFor(model => model.OrderViewModel.Order.ItemID)
+    @Html.HiddenFor(model => model.OrderViewModel.Order.ID)
+}
+
+<table class="tableAutoRow table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>項目</th>
+            <th>主辦縣市</th>
+            <th>組別</th>
+            <th>選手姓名</th>
+            <th>上傳音樂</th>
+            <th>價格(每人)</th>
+            @*<th>優惠價</th>*@
+            <th>總計</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="OrderItemTableBody">
+        @* Editing *@
+        @if (Model.IsEditing)
+        {
+            @Html.Hidden("Order.ID", Model.OrderViewModel.Order.ID)
+
+            if (Model.OrderViewModel.OrderDetails != null)
+            {
+                foreach (var item in Model.OrderViewModel.OrderDetails)
+                {
+                    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Order", "_Competition_OrderItem_row"), item)
+                }
+            }
+        }
+        @* View *@
+        else
+        {
+            if (Model.OrderViewModel.OrderDetails != null)
+            {
+                foreach (var item in Model.OrderViewModel.OrderDetails)
+                {
+                    <tr>
+                        <td>@item.ItemSubject</td>
+                        <td>@item.DepartmentName</td>
+                        <td>@item.Option</td>
+                        <td>@(string.Join(",", item.DetailMembers.Select(x => x.NickName)))</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FilePath))
+                            {
+                                <a href="@RouteHelper.SetUrlPath(item.FilePath)" target="_blank">檔案</a>
+                            }
+                        </td>
+                        <td class="text-right">@item.SalePrice.ToString("0")</td>
+                        @*<td class="text-right"></td>*@
+                        @* 價格*人數 *@
+                        <td class="text-right">@((item.SalePrice * item.Quantity).ToString("0"))</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        @if (Model.IsEditing)
+        {
+            <tr>
+                <td colspan="9" style="text-align:center">
+                    @Ajax.RawActionLink("+", "GetCompetitionRow", "Order", new { block = OrderEditBlock.OrderItem },
+    new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "OrderItemTableBody", OnSuccess = "OnAddCompetitionRow()" }, new { @class = "btn btn-success btn-sm" })
+                </td>
+            </tr>
+        }
+    </tfoot>
+</table>
+
+
+<table class="table table-bordered">
+    <tr>
+        <td width="80%" class="text-right">總金額</td>
+        <td class="text-right">@(Model.IsEditing ? "" : Model.OrderViewModel.Order.TotalPrice.ToString("0"))</td>
+    </tr>
+</table>

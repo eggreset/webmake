@@ -1,0 +1,541 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>嚼世好堅</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/linericon/style.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+    <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+
+<body>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v3.3'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/zh_TW/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <img class="RWD_img" src="./img/first.jpg" alt="">
+    <img class="RWD_top-img" src="./img/change-01.jpg" alt="">
+    <img class="RWD_small-img" src="./img/change-02.jpg" alt="">
+    <img class="RWD_img" src="./img/center.jpg" alt="">
+    <img class="RWD_top-img" src="./img/six-03.jpg" alt="">
+    <img class="RWD_small-img" src="./img/six-04.jpg" alt="">
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <h3 class="text-center main-title">購買方案</h3>
+        <div class="container p-0" style="background-color: #f8f4f1;">
+            <div class="cart_inner">
+                <div class="cart-list">
+                    <div class="d-flex p-3 bg-g">
+                        <h4 class="w-50 text-center m-0 w-h4">商品名稱</h4>
+                        <h4 class="w-25 text-center m-0 w-h4">價格/特價</h4>
+                        <h4 class="w-25 text-center m-0 w-h4">數量</h4>
+                    </div>
+                    <div class="media d-flex align-items-center p-3">
+                        <div class="d-flex w-50 flex-wrap align-items-center justify-content-center">
+                            <img src="img/product/product.jpg" alt="" />
+                            <div style="width: 60%;">
+                                <p class="bro-title">
+                                    成長堅果(450g/罐)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="w-25 text-center" style="color: #a15d2c;">
+                            <p>
+                                NT <b style="color: #a15d2c;text-decoration: line-through;">380</b> / <span
+                                    style="font-size: 20px;font-weight: bold;">349</span>元
+                            </p>
+                        </div>
+                        <div class="w-25 text-center">
+                            <div class="product_count">
+                                <input type="text" name="qty" id="product1" maxlength="12" value="1" title="Quantity:"
+                                    class="input-text qty" />
+                                <button
+                                    onclick="var result = document.getElementById('product1'); var product1 = result.value; if( !isNaN( product1 )) result.value++;return false;"
+                                    class="increase items-count" type="button">
+                                    <i class="lnr lnr-chevron-up"></i>
+                                </button>
+                                <button
+                                    onclick="var result = document.getElementById('product1'); var product1 = result.value; if( !isNaN( product1 ) &amp;&amp; product1 > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button">
+                                    <i class="lnr lnr-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media d-flex align-items-center p-3">
+                        <div class="d-flex w-50 flex-wrap align-items-center justify-content-center">
+                            <img src="img/product/product.jpg" alt="" />
+                            <div style="width: 60%;">
+                                <p class="bro-title">
+                                    運動堅果(450g/罐)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="w-25 text-center" style="color: #a15d2c;">
+                            <p>
+                                NT<b style="color: #a15d2c;text-decoration: line-through;">380</b> / <span
+                                    style="font-size: 20px;font-weight: bold;">349</span>元
+                            </p>
+                        </div>
+                        <div class="w-25 text-center">
+                            <div class="product_count">
+                                <input type="text" name="qty" id="product2" maxlength="12" value="1" title="Quantity:"
+                                    class="input-text qty" />
+                                <button
+                                    onclick="var result = document.getElementById('product2'); var product2 = result.value; if( !isNaN( product2 )) result.value++;return false;"
+                                    class="increase items-count" type="button">
+                                    <i class="lnr lnr-chevron-up"></i>
+                                </button>
+                                <button
+                                    onclick="var result = document.getElementById('product2'); var product2 = result.value; if( !isNaN( product2 ) &amp;&amp; product2 > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button">
+                                    <i class="lnr lnr-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media d-flex align-items-center p-3">
+                        <div class="d-flex w-50 flex-wrap align-items-center justify-content-center">
+                            <img src="img/product/product.jpg" alt="" />
+                            <div style="width: 60%;">
+                                <p class="bro-title">
+                                    成長+運動+美容堅果(450g/各一罐)
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="w-25 text-center" style="color: #a15d2c;">
+                            <p>
+                                NT <b style="color: #a15d2c;text-decoration: line-through;">1240</b> / <span
+                                    style="font-size: 20px;font-weight: bold;">1088</span>元
+                            </p>
+                        </div>
+                        <div class="w-25 text-center">
+                            <div class="product_count">
+                                <input type="text" name="qty" id="product3" maxlength="12" value="1" title="Quantity:"
+                                    class="input-text qty" />
+                                <button
+                                    onclick="var result = document.getElementById('product3'); var product3 = result.value; if( !isNaN( product3 )) result.value++;return false;"
+                                    class="increase items-count" type="button">
+                                    <i class="lnr lnr-chevron-up"></i>
+                                </button>
+                                <button
+                                    onclick="var result = document.getElementById('product3'); var product3 = result.value; if( !isNaN( product3 ) &amp;&amp; product3 > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button">
+                                    <i class="lnr lnr-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <!-- <div class="text-center w-25">
+                            <h4 style="background-color: #4f6a35;color:#fbfbf9;font-weight: bold;padding: 10px 0;">運送區域
+                            </h4>
+                            <p class="m-0 p-3" style="color: #a15d2c;font-weight: bold;">台灣及離島</p>
+                        </div> -->
+                        <div class="w-100">
+                            <h4 style="padding: 10px 0;" class="text-center bg-g w-h4">
+                                付款方式
+                            </h4>
+                            <div class=" form-check d-flex justify-content-around">
+                                <label class="form-check-label p-3">
+                                    <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">
+                                    <p style="color: #a15d2c;font-weight: bold;">信用卡</p>
+                                </label>
+                                <label class="form-check-label p-3">
+                                    <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">
+                                    <p style="color: #a15d2c;font-weight: bold;">ATM轉帳</p>
+                                </label>
+                                <label class="form-check-label p-3">
+                                    <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">
+                                    <p style="color: #a15d2c;font-weight: bold;">貨到付款</p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-center bg-g w-h4" style="padding: 10px 0;">
+                            訂單資訊
+                        </h4>
+                        <div class="d-flex" style="padding-left: 50px;color: #a15d2c;">
+                            <p class="w-25">商品總額</p>
+                            <p>$ 360</p>
+                        </div>
+                        <div class="d-flex" style="padding-left: 50px;color: #a15d2c;">
+                            <p class="w-25">運費</p>
+                            <p>$ 30</p>
+                        </div>
+                        <div class="d-flex"
+                            style="padding-left: 50px;color: #a15d2c;font-size: 20px;border-top: 1px solid #4f6a35;border-bottom:  1px solid #4f6a35;">
+                            <h5 class="w-25 mt-2" style="color: #a15d2c;font-weight: bold;">應付金額</h5>
+                            <p class="mt-2" style="color: #a15d2c;font-weight: bold;">$ 390</p>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 w-h4 w-100" style="overflow: hidden;">
+                        <h4 style="padding: 10px 0;text-align: center;">
+                            訂購資訊
+                        </h4>
+                        <form class="row contact_form p-3" action="#" method="post" novalidate="novalidate">
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="name" name="name" />
+                                <span class="placeholder" data-placeholder="訂購人姓名"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="number" name="number" />
+                                <span class="placeholder" data-placeholder="連絡電話"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="email" name="compemailany" />
+                                <span class="placeholder" data-placeholder="電子信箱"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add1" name="add1" />
+                                <span class="placeholder" data-placeholder="配送地址"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <textarea class="form-control" name="message" id="message" rows="1"
+                                    placeholder="商品備註"></textarea>
+                                <div>
+                                    <h4 class="mt-40">發票信息</h4>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input radio" name="invoice" id=""
+                                                value="checkedValue" checked>捐給慈善機構（捐出後無法再索取）<br>
+                                            <input type="radio" class="form-check-input radio" name="invoice" id=""
+                                                value="checkedValue">寄送發票<br>
+                                            <input type="radio" class="form-check-input radio" name="invoice" id=""
+                                                value="checkedValue">電子發票（需輸入載具號碼）
+                                            <div>
+                                                <label for="invoice-num">請輸入載具號碼：</label>
+                                                <input type="text" name="invoice-num" id="invoice-num"
+                                                    aria-describedby="helpId" placeholder="請輸入載具號碼">
+                                            </div>
+                                            <br>
+                                            <input type="radio" class="form-check-input radio" name="invoice" id=""
+                                                value="checkedValue">統編紙本發票(三聯)
+                                        </label>
+                                        <div>
+                                            <label for="invoice-num">公司抬頭：</label>
+                                            <input type="text" name="invoice-num" id="invoice-num"
+                                                aria-describedby="helpId"><br>
+                                            <label for="invoice-num">統一編號：</label>
+                                            <input type="text" name="invoice-num" id="invoice-num"
+                                                aria-describedby="helpId"><br>
+                                            <label for="invoice-num">聯絡電話：</label>
+                                            <input type="text" name="invoice-num" id="invoice-num"
+                                                aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="checkout_btn_inner d-flex justify-content-end w-100 pt-3 position-relative"
+                    style="overflow:hidden;">
+                    <div class="bottom-maskL"></div>
+                    <a class=" col-6 buy_btn m-auto" style="z-index: 1;" href="./oneshop-complete.html">我要購買</a>
+                    <div class="bottom-maskR"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-5 container pt-3 pb-3  " style="background-color: #f8f4f1;">
+            <h3 class="main-title text-center">客服資訊</h3>
+            <div class="d-flex justify-content-around service flex-wrap">
+                <div class="text-center">
+                    <h4 class="main-title">【客服電話】</h4>
+                    <h4 class="main-title">0919-918-060</h4>
+                    <h4 class="main-title">（週一至週五10:00-12:00、13:30-18:30）</h4>
+                </div>
+                <div class="text-center">
+                    <h4 class="main-title">【線上客服】</h4>
+                    <h4 class="main-title">嚼世好堅FB@官方帳號</h4>
+                    <h4 class="main-title">（帳號：@ohmygoodnuts）</h4>
+                </div>
+            </div>
+        </div>
+        <div class="fixed-icon">
+            <a href="#"><img src="./img/buy-icon.png" alt=""></a>
+            <!-- <a href="#"><img src="./img/fb-icon.png" alt=""></a> -->
+        </div>
+
+
+        <!-- Your customer chat code -->
+        <div class="fb-customerchat" attribution=install_email page_id="392838991316738" theme_color="#9F812C">
+        </div>
+
+
+        <div class="text-center contact mt-5">
+            <h2>不會訂購嗎？</h2>
+            <h4>直接私訊，我們也可以幫你下單！</h4>
+            <a href="https://m.me/ohmygoodnuts" target="_blank" class="main-title">洽詢客服</a>
+        </div>
+    </section>
+
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendors/counter-up/jquery.counterup.js"></script>
+    <script src="js/theme.js"></script>
+
+</body>
+<style>
+    .bg-g {
+        background-color: #4f6a35;
+    }
+
+    .RWD_img {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+    }
+    .RWD_top-img {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+    }
+    .RWD_small-img {
+        width: 80%;
+
+        margin: 0 auto;
+        display: none;
+    }
+
+    .w-h4 {
+        color: #fffdff;
+        font-weight: bold;
+    }
+
+    .main-title {
+        color: #4f6a35;
+        font-weight: bold;
+    }
+
+    .bro-title {
+        color: #a15d2c;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .cart_area {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    strong {
+        display: block;
+        margin: 10px auto;
+        padding: 5px 15px;
+        text-align: center;
+        background-color: #a15d2c;
+        color: #fffdff;
+        border-radius: 20px;
+        width: 100px;
+    }
+
+    em {
+        border: 2px solid #a15d2c;
+        display: block;
+        margin: 10px auto;
+        padding: 3px 15px;
+        text-align: center;
+        color: #a15d2c;
+        border-radius: 20px;
+        font-style: normal;
+        font-weight: bold;
+        width: 100px;
+
+    }
+
+    input,
+    .p_star input,
+    textarea.form-control {
+        border-width: 1px;
+        border-color: #4f6a35;
+        border-radius: 5px;
+        background-color: #00000000;
+    }
+
+    .buy_btn {
+        background-color: #4f6a35;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        color: #fffdff;
+    }
+
+    .buy_btn:hover {
+        background-color: #fffdff;
+        color: #4f6a35;
+        border: 1px solid #4f6a35;
+    }
+
+    .bottom-maskL {
+        position: absolute;
+        top: 90px;
+        left: -100px;
+        width: 100%;
+        background-color: #fff;
+        height: 100PX;
+        transform: rotate(10deg)
+    }
+
+    .bottom-maskR {
+        position: absolute;
+        top: 90px;
+        right: -100px;
+        width: 100%;
+        background-color: #fff;
+        height: 100PX;
+        transform: rotate(-10deg)
+    }
+
+    label {
+        color: #a15d2c;
+        font-size: 16px;
+    }
+
+    input.radio {
+        width: 18px;
+        height: 18px;
+    }
+
+    .service div:first-child {
+        border-right: 1px solid #4f6a35;
+    }
+
+    .service>div {
+        width: 50%;
+    }
+
+
+
+    .contact h2,
+    .contact h4 {
+        color: #a15d2c;
+        font-weight: bold;
+    }
+
+    .contact a {
+        border: 2px solid #4f6a35;
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .contact a:hover {
+        background-color: #4f6a35;
+        color: #fffdff;
+
+    }
+
+    .fixed-icon {
+        position: fixed;
+        right: 30px;
+        bottom: 100px;
+    }
+
+    .fixed-icon img {
+        display: block;
+        width: 50px;
+        margin-top: 20px;
+        transition: all .3s ease;
+    }
+
+    .fixed-icon a:hover img {
+        transform: scale(1.3);
+    }
+
+    @media screen and (max-width: 1024px) {
+
+
+        .cart_area {
+            padding-top: 50px;
+        }
+
+    }
+
+    @media screen and (max-width: 768px) {
+        .RWD_top-img {
+            width: 100%;
+            display: none;
+        }
+        .RWD_small-img {
+            width: 100%;
+            margin-top: 5px;
+            display: block;
+        }
+        .RWD_img{
+            width: 100%;
+        }
+
+        .cart_area {
+            width: 100%;
+            padding-top: 0px;
+        }
+
+        .service>div {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .service div:first-child {
+            border-right: none;
+        }
+    }
+</style>
+
+</html>

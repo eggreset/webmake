@@ -1,0 +1,43 @@
+﻿@using MyTool.Enums
+@model WebMaker.Entity.ViewModels.SendEmailViewModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div id="top" style="z-index: 2;">
+    <div class="H_10" style="background-image: url('../../../html/Aiot/images/login_bg.jpg'); width: 1904px; "></div>
+    <span class="login_box form-style-10 wow bounceInUp">
+        <h1><i class="fas fa-user-edit"></i>  會員中心</h1>
+
+        @using (Html.BeginForm("SendValidCode", "Member", FormMethod.Post, new { @class = "form-member form-login" }))
+        {
+            <input type="hidden" id="returnUrl" value="@Url.Action("Login", "Member", new { })" />
+            <input type="hidden" id="successMessage" data-title="@ViewBag.Title" value="@MyTool.Enums.MessageType.Confirm" />
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.SystemMailType)
+            @Html.HiddenFor(model => model.ValidType)
+            <div class="inner-wrap off_space_top">
+                <h2>@(ViewBag.Title == "重寄驗證信" ? "未收到認證信？" : "忘記密碼？")</h2>
+                <label>
+                    <i class="far fa-address-card"></i>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "login-input100 form-control", placeholder = "請填入註冊時使用的Email信箱" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </label>
+                <label>
+                    <i class="fas fa-pencil-alt"></i>
+                    @Html.TextBoxFor(model => model.Captcha, "", new { @class = "form-control", placeholder = "請輸入驗證碼", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                </label>
+                <div class="cap_box">
+                    <img class="imgverifycode" src="@Url.Action("CaptchaImage","Member")" alt="驗證碼" />
+                    <a class="btnnewcode" href="javascript:"><i class="fas fa-sync-alt"></i> 更新驗證碼</a>
+                </div>
+                <div class="button-section on_space_top">
+                    <input id="SaveBtn" type="button" value="@(ViewBag.Title == "重寄驗證信"? "重新發送認證信":"重設密碼")" />
+                </div><div class="section right"><span><a href="@Url.Action("Login", "Member")">回登入頁 <i class="fas fa-chevron-circle-right"></i></a></span></div>
+            </div>
+        }
+</div>

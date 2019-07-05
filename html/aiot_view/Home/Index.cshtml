@@ -1,0 +1,125 @@
+﻿@using WabMaker.Web.WebViewModels
+@using MyTool.ViewModels
+@using MyTool.Services
+@{
+    ViewBag.Title = "";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+@section MainSlider{
+    @Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Article_1",
+    ViewName = "Article_1",
+    PageSize = 3,
+    CurrentPage = 1,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid>
+        {
+        new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+})
+}
+
+    <div id="container" class="space_top">
+        <div class="wrap_box">
+            <!--===================================================滑動列表3欄===================================================================-->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Article_2",
+            ViewName = "Article_2",
+            PageSize = 8,
+            CurrentPage = 1,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") }),
+            CategoryJson= _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("0f20ce24-55c4-492d-a787-3712efb0b8eb"), new Guid("af3e332f-8fb2-45db-84cd-25ff91e28c11") })
+        })
+
+
+            <!--列表:固定一列3欄-->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Article_3",
+            ViewName = "Article_3",
+            PageSize = 3,
+            CurrentPage = 1,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") }),
+            CategoryJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("ed8988ab-8438-4623-b5f7-50536d77d3aa"), new Guid("7344db1a-03b6-40ef-b696-eb42fbfebd43")  })
+        })
+
+            <!--===================================================一列表4欄===================================================================-->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Article_4",
+            ViewName = "Article_4",
+            PageSize = 4,
+            CurrentPage = 1,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+        })
+
+
+            <!--   AD_banner--->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Advertisement_1",
+            ViewName = "Advertisement_1",
+            PageSize = 2,
+            CurrentPage = 1,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid> {
+                               new Guid("49d98f6f-9264-461a-8d17-adbeaf5684b7") })
+        })
+
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Advertisement_2",
+            ViewName = "Advertisement_2",
+            PageSize = 1,
+            CurrentPage = 3,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid> {
+                               new Guid("49d98f6f-9264-461a-8d17-adbeaf5684b7") })
+        })
+
+            <!--style="display: none;"列表:一列2欄-->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Article_5",
+            ViewName = "Article_5",
+            PageSize = 5,
+            CurrentPage = 1,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") }),
+            CategoryJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("fb874264-d4aa-43ba-8ef9-4014319d8b65") })
+        })
+
+            <!--列表:一列2欄-->
+            @Html.Action("Partial", "Item", new ItemPageModel
+        {
+            CacheName = "Article_6",
+            ViewName = "Article_6",
+            IsPaged = false,
+            SortColumn = SortColumn.Date,
+            StructureJson = _Json.ModelToJson(new List<Guid>
+                {
+                new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+        })
+
+            <!--======================================[左列表‧右列表]列表:一列2================================================-->
+            @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Get_Partial_Related"))
+        </duv></div>

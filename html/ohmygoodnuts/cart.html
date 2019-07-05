@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>嚼世好堅｜購物車</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/linericon/style.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="vendors/animate-css/animate.css" />
+    <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css?v" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/main.css?v=1">
+    <link rel="stylesheet" href="css/cart-style.css?v=1" type="text/css" media="screen">
+
+
+</head>
+
+<body>
+    <!--================Header Menu Area =================-->
+    <header class="header_area"></header>
+    <!--================Header Menu Area =================-->
+    <!--================Home Banner Area =================-->
+    <section class="banner_area pagination-banner ">
+        <div class="banner_mask d-flex align-items-center ">
+            <div class="container">
+                <div class="banner_content d-md-flex justify-content-between align-items-center">
+                    <div class="mb-3 mb-md-0">
+                        <h2>購物車</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+    <section class="container d-flex done-list">
+        <div class="order d-flex done" id="order1">
+            <div><em>1</em></div>
+            <div>
+                <span>Choose</span>
+                <p>放入購物車</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order2">
+            <div><em>2</em></div>
+            <div>
+                <span>Login</span>
+                <p>登入會員</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order3">
+            <div><em>3</em></div>
+            <div>
+                <span>Check</span>
+                <p>確認資料</p>
+            </div>
+        </div>
+        <div class="order d-flex" id="order4">
+            <div><em>4</em></div>
+            <div>
+                <span>Complete</span>
+                <p>訂購完成</p>
+            </div>
+        </div>
+    </section>
+    <!--================Cart Area =================-->
+    <div class="cart-w">
+        <div class="commo-w">
+            <div class="commo-title d-flex text-center">
+                <div class="w-50">產品</div>
+                <div class="title-unit" style="width: 15%;">價格</div>
+                <div class="title-quantity" style="width: 20%;">數量</div>
+                <div class="title-subtotal" style="width: 15%;">小計</div>
+            </div>
+
+            <div class="commo-box" style="font-size:16px;">
+                <div class="d-flex align-items-center position-relative">
+
+                    <div style="width: 50%;">
+                        <a href="#" class="icons" style="position: absolute;top: 20px;">
+                            <div class="ti-close" aria-hidden="true">X</div>
+                        </a>
+                        <div class="media d-flex align-items-center justify-content-around" style="flex-wrap:wrap;">
+                            <img class="m-0" src="img/product/sport.jpg" alt="" />
+                            <p>綜合堅果-薄鹽</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center" style="width: 15%;">$360</div>
+                    <div class="d-flex justify-content-center" style="width: 20%;">
+                        <div class="product_count m-0">
+                            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                                   class="input-text qty" />
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                    class="increase items-count" type="button">
+                                <i class="lnr lnr-chevron-up"></i>
+                            </button>
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button">
+                                <i class="lnr lnr-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center total" style="width: 15%;">$720</div>
+
+                </div>
+                <div class="d-flex align-items-center position-relative">
+
+                    <div style="width: 50%;">
+                        <a href="#" class="icons" style="position: absolute;top: 20px;">
+                            <div class="ti-close" aria-hidden="true">X</div>
+                        </a>
+                        <div class="media d-flex align-items-center justify-content-around" style="flex-wrap:wrap;">
+                            <img class="m-0" src="img/product/sport.jpg" alt="" />
+                            <p>綜合堅果-薄鹽</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center" style="width: 15%;">$360</div>
+                    <div class="d-flex justify-content-center" style="width: 20%;">
+                        <div class="product_count m-0">
+                            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                                   class="input-text qty" />
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                    class="increase items-count" type="button">
+                                <i class="lnr lnr-chevron-up"></i>
+                            </button>
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button">
+                                <i class="lnr lnr-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center total" style="width: 15%;">$720</div>
+
+                </div><div class="d-flex align-items-center position-relative">
+
+    <div style="width: 50%;">
+        <a href="#" class="icons" style="position: absolute;top: 20px;">
+            <div class="ti-close" aria-hidden="true">X</div>
+        </a>
+        <div class="media d-flex align-items-center justify-content-around" style="flex-wrap:wrap;">
+            <img class="m-0" src="img/product/sport.jpg" alt="" />
+            <p>綜合堅果-薄鹽</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center" style="width: 15%;">$360</div>
+    <div class="d-flex justify-content-center" style="width: 20%;">
+        <div class="product_count m-0">
+            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                   class="input-text qty" />
+            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                    class="increase items-count" type="button">
+                <i class="lnr lnr-chevron-up"></i>
+            </button>
+            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                    class="reduced items-count" type="button">
+                <i class="lnr lnr-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center total" style="width: 15%;">$720</div>
+
+</div>
+
+
+
+
+
+                <div class="cart_clear"></div>
+            </div>
+            
+            <div class="refresh-box">
+                <div class="cupon_text">
+                    <input type="text" placeholder="請輸入代碼" />
+                    <a class="main_btn" href="#">使用優惠券</a>
+
+                </div>
+            </div>
+
+            <div class="commo-title">
+                <div class="title-name">運費</div>
+            </div>
+            <div class="commo-box pl-2">
+                <div class="form-check">
+                    <ul>
+                        <li>
+                            <label class="form-check-label w-100">
+                                <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue"
+                                       checked>超商貨到付款 70元
+                            </label>
+                        </li>
+                        <li>
+                            <label class="form-check-label w-100">
+                                <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">超商取貨
+                                60元
+                            </label>
+                        </li>
+                        <li>
+                            <label class="form-check-label w-100">
+                                <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">宅配
+                                200元
+                            </label>
+                        </li>
+                        <li>
+                            <label class="form-check-label w-100">
+                                <input type="radio" class="form-check-input" name="ship" id="" value="checkedValue">免運費
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="billing-row">
+
+            <ul class="list">
+                <li>
+
+                    <a class="text-dark" href="#">超商貨到付款 70元</a>
+                </li>
+                <li>
+                    <a class="text-dark" href="#">超商取貨 60元</a>
+                </li>
+                <li>
+                    <a class="text-dark" href="#">宅配 200元</a>
+                </li>
+                <li class="active">
+                    <a class="text-dark" href="#">免運費</a>
+                </li>
+            </ul>
+        </div> -->
+                <div class="cart_clear"></div>
+
+            </div>
+            <div class="billing-box m-auto">
+                <div class="billing-title">
+                    <div class="bltitle-name">消費總計</div>
+                    <div class="bltitle-note">滿1800元，免運費送達</div>
+                </div>
+
+                <div class="billing-row">
+                    <div class="blrow-list">
+                        <div class="list-subtotal">小計</div>
+                        <div class="subtotal-money">$ 1520</div>
+                    </div>
+                    <div class="blrow-list">
+                        <div class="list-subtotal">運費</div>
+                        <div class="subtotal-money">$ 1520</div>
+                    </div>
+                </div>
+                <div class="billing-row">
+                    <div class="total-list">
+                        <div class="list-total">總計</div>
+                        <div class="total-money">$ <span id="totalprice">1730</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout_btn_inner d-flex justify-content-between mt-5">
+                <a class="gray_btn" href="./category.html">繼續購物</a>
+                <a class="main_btn ml-3" href="./tracking.html">確認結算</a>
+            </div>
+            <!-- <div class="pay-box">
+        <div class="pay-carry"><a href="pro-list.aspx">繼續購物</a></div>
+    </div> -->
+
+        </div>
+    </div>
+
+
+    <!--================End Cart Area =================-->
+    <!--================ start footer Area  =================-->
+    <footer id="footer-area"></footer>
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendors/counter-up/jquery.counterup.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".header_area").load('header.html');
+            $("#footer-area").load('footer.html');
+        });
+    </script>
+    <style>
+        @media screen and (max-width: 1024px) {
+            .container {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+
+</html>

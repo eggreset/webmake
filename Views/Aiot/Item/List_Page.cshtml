@@ -1,0 +1,33 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 一般文章列表-分頁 *@
+
+<!--======================================列表:一列3欄=============================================-->
+@{
+    var DataCheck = Model?.DataResult?.Data;
+    if (DataCheck != null)
+    {
+        foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+                <div class="aside_3">
+                    <div class="img pic_size" style="background-image: url(@(mainImage.FileType == FileType.YouTube ? _YouTube.SetThumbnail(mainImage.FilePath) : RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)));"><img src="/html/Aiot/images/blank_500x315.png" alt=""></div>
+                    <hgroup>
+                        <h1><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">@item.ItemLanguage.Subject</a></h1>
+                        <p>
+                            @_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 50)
+                        </p>
+                        <p class="publish_day"><i class="fas fa-pen-nib"></i>&ensp; @item.Item.Date.ToDateString("yyyy/MM/dd")</p>
+                         <span class="link_box"><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">more <i class="fas fa-angle-double-right"></i></a></span>
+                    </hgroup>
+                </div>
+            }
+        }
+    }
+}

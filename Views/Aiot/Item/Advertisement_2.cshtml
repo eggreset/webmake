@@ -1,0 +1,26 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+
+@{
+    if (Model != null)
+    {
+        var item = Model.DataResult.Data.FirstOrDefault();
+        if (item != null)
+        {
+            var mainImage = item.ItemFiles.FirstOrDefault(x => x.SourceType == SourceType.ItemConver);
+            if (mainImage != null)
+            {
+                <section class="full_ad" style="background-image:url(@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))">
+                    <div class="big_banner wow bounceInLeft animated">
+                        <a href="@item.ItemLanguage.LinkUrl" target="@(item.ItemLanguage.IsBlankUrl ? "_blank" : "_self")">
+                            <img src="~/html/Aiot/images/blank.png" width="100%" />
+                        </a>
+                    </div>
+                </section>
+            }
+        }
+    }
+}

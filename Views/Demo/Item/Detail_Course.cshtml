@@ -1,0 +1,59 @@
+﻿@using WabMaker.Web.Helpers
+@using MyTool.Enums
+@using MyTool.Services
+@using MyTool.ViewModels
+@model WabMaker.Web.WebViewModels.ItemWebViewModel
+@{
+    ViewBag.Title = Model.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var mainImage = Model.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    var imgUrl = mainImage == null ? "" :
+        (mainImage.FileType == FileType.YouTube) ?
+        _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+        mainImage.FilePath;//封面
+
+    var thumbUrl = mainImage == null ? "" :
+     (mainImage.FileType == FileType.YouTube) ?
+     _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+     RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath);//封面
+
+    var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemLanguage.Content), 200);
+}
+@section meta
+{
+    <meta property="og:title" content="@Model.ItemLanguage.Subject" />
+    <meta property="og:url" content="@RouteHelper.Url(true)" />
+    <meta property="og:image" content="@thumbUrl" />
+    <meta property="og:description" content="@description" />
+}
+
+<h2>@Model.ItemLanguage.Subject</h2>
+
+@if (Model.Item.StockCount - Model.Item.SaleCount > 0)
+{
+    <span class="label label-success">尚有名額</span>
+}
+else
+{
+    <span class="label label-danger">已額滿</span>
+}
+<br>
+活動名稱 : @Model.ItemLanguage.Subject<br>
+活動地點 : @Model.ItemLanguage.Address<br>
+
+報名上限人數 : @(Model.Item.StockCount)人<br>
+目前報名人數 : @(Model.Item.SaleCount)人<br>
+
+<br>
+報名時間 :@Model.Item.SaleStartTime.ToDateString("yyyy/MM/dd HH:mm") ~ @Model.Item.SaleEndTime.ToDateString("yyyy/MM/dd HH:mm")
+<br>
+費用 <s>$@Model.Item.OriginalPrice.ToString("0")</s><br>
+優惠價 $@Model.Item.SalePrice.ToString("0")<br>
+
+<a href="@Url.Action("SignUp","Order",new {id=Model.Item.ID })" class="btn btn-warning">
+    去報名
+</a>
+
+<hr>
+@Html.Raw(Model.ItemLanguage.Content)

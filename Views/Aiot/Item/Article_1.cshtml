@@ -1,0 +1,27 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+<!--===================================主圖輪播================================================-->
+<div class="hero-gallery js-flickity" data-flickity-options='{ "autoPlay": true }'>
+    @if (Model != null)
+    {
+        foreach (var item in Model.DataResult.Data)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+                <div class="hero-gallery__cell" style="background-image: url(@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" data-tb-src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)))">
+                    <div class="content-wrap text">
+                        <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })"><h1>@_Html.WordSubstring(item.ItemLanguage.Subject, 26)</h1></a>
+                        <h2>@item.ItemLanguage.Description</h2>
+                        <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 40)</p>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+<!--===================================主圖輪播================================================-->

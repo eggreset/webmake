@@ -1,0 +1,170 @@
+﻿@using MyTool.ViewModels
+@using WabMaker.Web.Helpers
+@using WebMaker.BLL.Helpers
+@{
+    SiteInfoViewModel SiteInfo = ApplicationHelper.SiteInfo;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @if (SiteInfo != null)
+    {
+        @Html.Partial("_BaseMeta", SiteInfo)
+    }
+    <!-- Stylesheets -->
+    <link href="~/html/LoveTaiwan/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/html/LoveTaiwan/css/responsive/responsive.css?v=2018.11.14" rel="stylesheet">
+    <link href="~/html/LoveTaiwan/style.css" rel="stylesheet" />
+
+    @RenderSection("css", required: false)
+    @RenderSection("meta", required: false)
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader">
+        <div class="yummy-load"></div>
+    </div>
+
+    <!-- ****** Top Header Area Start ****** -->
+    <div class="top_header_area ">
+        <div class="container">
+            <div class="row">
+                <div class="col-5 col-sm-6">
+                    <!--  Top Social bar start -->
+                    <div class="top_social_bar">
+                        @if (!string.IsNullOrEmpty(SiteInfo.Facebook))
+                        {
+                            <a href="@SiteInfo.Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(SiteInfo.Instagram))
+                        {
+                            <a href="@SiteInfo.Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(SiteInfo.YouTube))
+                        {
+                            <a href="@SiteInfo.YouTube" target="_blank"><i class="fa fa fa-youtube-play" aria-hidden="true"></i></a>
+                        }
+                    </div>
+                </div>
+                <!--  Login Register Area -->
+                <div class="col-7 col-sm-6">
+                    <div class="signup-search-area d-flex align-items-center justify-content-end">
+                        <div class="login_register_area d-flex">
+                            @if (SessionManager.UserID != Guid.Empty && SessionManager.AccountType == MyTool.Enums.AccountType.Member)
+                            {
+                                <div class="login">
+                                    <a class="" href="@Url.Action("Profile","Member")"><i class=""></i>會員中心</a>
+                                </div>
+                                <div class="register">
+                                    <a href="@Url.Action("LogOut", "Member")">登出</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="login">
+                                    <a href="@Url.Action("Login", "Member")">登入</a>
+                                </div>
+                                <div class="register">
+                                    <a href="@Url.Action("SignUp","Member")">註冊</a>
+                                </div>
+                            }
+                        </div>
+                        <!-- Search Button Area -->
+                        <div class="search_button">
+                            <a class="searchBtn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                        </div>
+                        <!-- Search Form -->
+                        <div class="search-hidden-form">
+                            <form action="@Url.Action("Search", "Home")" method="get">
+                                <input type="search" name="q" id="search-anything" placeholder="Search Anything...">
+                                <input type="submit" value="" class="d-none">
+                                <span class="searchBtn"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ****** Top Header Area End ****** -->
+    <!-- ****** Header Area Start ****** -->
+    <header class="header_area header_color">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-2 logo-img">
+                    <a href="@Url.Action("Index", "Home")" title="">
+                        <img src="~/html/LoveTaiwan/img/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="col-sm-12 col-lg-8">
+                    <nav class="navbar navbar-expand-lg">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#yummyfood-nav" aria-controls="yummyfood-nav" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars" aria-hidden="true"></i> Menu</button>
+                        <!-- Menu Area Start -->
+                        <div class="collapse navbar-collapse justify-content-center" id="yummyfood-nav">
+                            <ul class="navbar-nav" id="yummy-nav">
+                                @Html.Action("Menu", "Item", new { position = MyTool.Enums.MenuPosition.Top })
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ****** Header Area End ****** -->
+    @RenderBody()
+
+    <!-- ****** Footer Menu Area Start ****** -->
+    <footer class="footer_area footer_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-content">
+                        <!-- Logo Area Start -->
+                        <div class="footer-logo-area text-center">
+                            <!-- <a href="index.html" class="yummy-logo">Yummy Blog</a> -->
+                            <img src="~/html/LoveTaiwan/img/logo.png" alt="" style="width:20%;">
+                        </div>
+                        <!-- Menu Area Start -->
+                        <nav class="navbar navbar-expand-lg">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#yummyfood-footer-nav" aria-controls="yummyfood-footer-nav" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars" aria-hidden="true"></i> Menu</button>
+                            <!-- Menu Area Start -->
+                            <div class="collapse navbar-collapse justify-content-center" id="yummyfood-footer-nav">
+                                @Html.Action("Menu", "Item", new { position = MyTool.Enums.MenuPosition.Bottom })
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Copywrite Text -->
+                    <div class="copy_right_text text-center">
+                        <p>@(SiteInfo?.Copyright)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Jquery-2.2.4 js -->
+    <script src="~/html/LoveTaiwan/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/html/LoveTaiwan/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap-4 js -->
+    <script src="~/html/LoveTaiwan/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins JS -->
+    <script src="~/html/LoveTaiwan/js/others/plugins.js"></script>
+    <!-- Active JS -->
+    <script src="~/html/LoveTaiwan/js/active.js?v=2019.5.25"></script>
+    @Html.Partial("_ShowMessage")
+    @Html.Partial("_BaseScripts")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

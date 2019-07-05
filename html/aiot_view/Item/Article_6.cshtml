@@ -1,0 +1,38 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+
+@{
+    if (Model != null)
+    {
+        var item = Model.DataResult.Data.FirstOrDefault();
+        var youtubeurl = item.ItemFiles.FirstOrDefault(x => x.FileType == FileType.YouTube).FilePath;
+        if (item != null)
+        {
+            var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+            if (mainImage != null)
+            {
+                <div class="mov_title">@item.ItemLanguage.Subject</div>
+                <div class="com article_3">
+
+                    <div class="aside_2">
+                        <div class="mov2">
+                            <iframe src="@_YouTube.SetIframe(youtubeurl)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="aside_2">
+                        <p class="p_mov">@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 100)</p>
+                        <span class="link_box"><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">more <i class="fas fa-angle-double-right"></i></a></span>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+}

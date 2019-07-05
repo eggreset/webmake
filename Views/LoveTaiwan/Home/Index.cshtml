@@ -1,0 +1,158 @@
+﻿@using WabMaker.Web.WebViewModels
+@using MyTool.ViewModels
+@using MyTool.Services
+@using WabMaker.Web.Helpers
+@{
+    ViewBag.Title = "";
+    Layout = "../Shared/_Layout.cshtml";
+    SiteInfoViewModel SiteInfo = ApplicationHelper.SiteInfo;
+}
+
+@section meta
+{
+    @if (SiteInfo != null)
+    {
+        if (!string.IsNullOrEmpty(SiteInfo.SiteName))
+        {
+            <meta property="og:title" content="@SiteInfo.SiteName" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="@RouteHelper.Url(true)" />
+        }
+
+        if (!string.IsNullOrEmpty(SiteInfo.MetaTagDescription))
+        {
+            <meta property="og:description" content="@SiteInfo.MetaTagDescription">
+        }
+
+        if (!string.IsNullOrEmpty(SiteInfo.MetaTagOgImage))
+        {
+            <meta property="og:image" content="@RouteHelper.SetUrlPath(SiteInfo.MetaTagOgImage, isAbsolute:true)" />
+        }
+    }
+}
+
+<!-- ****** Welcome Post Area Start ****** -->
+@Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Advertisement_1",
+    ViewName = "Advertisement_1",
+    IsPaged = false,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("d04e2068-3857-4129-85bf-d633e9eaca64") })//Advertisement1
+})
+<!-- ****** Welcome Area End ****** -->
+<!-- ****** 廣告版位2 自訂標題+連結 ****** -->
+@Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Advertisement_2",
+    ViewName = "Advertisement_2",
+    IsPaged = false,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("c46c4af3-a5d2-4d68-9ecf-6109ed5f2f88") })//Advertisement2
+})
+
+<!-- ****** Categories Area Start ****** -->
+@Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Article_1",
+    ViewName = "Article_1",
+    PageSize = 3,
+    CurrentPage = 1,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("f965dde7-a13a-4676-a03b-3031c7588c48") })//Article1
+})
+<!-- ****** Categories Area End ****** -->
+<!-- ****** Blog Area Start ****** -->
+<section class="blog_area section_padding_0_80 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="row no-gutters">
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Article_2",
+                   ViewName = "Article_2",
+                   PageSize = 3,
+                   CurrentPage = 2,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("f965dde7-a13a-4676-a03b-3031c7588c48") })//Article2
+               })
+
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_5",
+                   ViewName = "Advertisement_5",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement5
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("9a0b81c3-2b56-4527-95f0-1a4442969bd9")})
+               })
+
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_6",
+                   ViewName = "Advertisement_6",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement6
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("4a0f2415-21b8-4a12-a3e1-c780e8108712")})
+               })
+                </div>
+            </div>
+
+            <!-- ****** Blog Sidebar ****** -->
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="blog-sidebar mt-5 mt-lg-0">
+                    <!-- Single Widget Area -->
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_3",
+                   ViewName = "Advertisement_3",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement3
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("e7426d9b-e9a1-497b-a148-568e974ee991")})
+               })
+
+                    <!-- Single Widget Area -->
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_4",
+                   ViewName = "Advertisement_4",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement4
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("6ef9012d-077a-464b-949e-c12eabc742a3")})
+               })
+
+                    <!-- newsletter -->
+                    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Item", "SubEpaper"), new WebMaker.Entity.ViewModels.SendEmailViewModel())
+
+                    <!-- Single Widget Area -->
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Teacher",
+                   ViewName = "Teacher",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("4d82f5e1-cd9a-4a13-b796-92c67b100a08") })//Teacher
+               })
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ****** Blog Area End ****** -->

@@ -1,0 +1,47 @@
+﻿@using WabMaker.Web.Helpers
+@using WebMaker.BLL.Helpers
+@{
+    List<MyTool.ViewModels.TreeViewModel> tree = WebMaker.BLL.Helpers.SessionManager.MenuTree;
+}
+
+<div class="col-md-2 col-sm-3 col-xs-12 hidden-sm hidden-xs">
+    <div class="member-subnav">
+        <div class="subnav-title">Hi,@SessionManager.UserName</div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            @GenerateMenu(tree)
+        </div>
+    </div>
+</div>
+
+@helper GenerateMenu(List<MyTool.ViewModels.TreeViewModel> nodes)
+{
+if (nodes != null)
+{
+    foreach (var item in nodes)
+    {
+
+        var url = WabMaker.Web.Helpers.RouteHelper.CreateUrl(item.Controller, item.Action, item.Url);
+        var isActive = RouteHelper.Url() == url;
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a href="@url" class="@(isActive?"active":"")">@item.Name</a>
+                    </h4>
+                </div>
+                @if(item.Nodes!=null)
+                {
+                    <iv id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                        <ul class="list-group">
+                            @foreach (var subitem in item.Nodes)
+                            {
+                                var suburl = WabMaker.Web.Helpers.RouteHelper.CreateUrl(item.Controller, item.Action, item.Url);
+                                var subisActive = RouteHelper.Url() == url;
+                                <li><a href="@url" class="list-group-item @(subisActive ? "active" : "")">@subitem.Name</a></li>
+                            }
+                        </ul>
+                    </iv>
+                }
+            </div>
+    }
+}
+}

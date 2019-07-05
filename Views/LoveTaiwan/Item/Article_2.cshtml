@@ -1,0 +1,64 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@if (Model != null)
+{
+    foreach (var item in Model.DataResult.Data)
+    {
+        var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+        var imgUrl = mainImage == null ? "" :
+            (mainImage.FileType == FileType.YouTube) ?
+            _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+            mainImage.FilePath;//封面
+
+        if (imgUrl != "")
+        {
+            <div class="col-12">
+                <div class="list-blog single-post d-sm-flex" data-wow-delay=".2s">
+                    <!-- Post Thumb -->
+                    <div class="post-thumb">
+                        <img src="@imgUrl" alt="">
+                    </div>
+                    <!-- Post Content -->
+                    <div class="post-content">
+                        <div class="post-meta d-flex">
+                            <div class="post-author-date-area d-flex">
+                                <!-- Post Author -->
+                                <div class="post-author">
+                                    <a href="#">By @item.ItemLanguage.Author</a>
+                                </div>
+                                <!-- Post Date -->
+                                <div class="post-date">
+                                    <a href="#">@item.Item.Date.ToDateString("MMM dd, yyyy")</a>
+                                </div>
+                            </div>
+                            <!-- Post Comment & Share Area -->
+                            @*<div class="post-comment-share-area d-flex">
+                                    <!-- Post Favourite -->
+                                    <div class="post-favourite">
+                                        <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
+                                    </div>
+                                    <!-- Post Comments -->
+                                    <div class="post-comments">
+                                        <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                    </div>
+                                    <!-- Post Share -->
+                                    <div class="post-share">
+                                        <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>*@
+                        </div>
+                        <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">
+                            <h4 class="post-headline">@item.ItemLanguage.Subject</h4>
+                        </a>
+                        <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 100)</p>
+                        <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })" class="read-more">繼續閱讀..</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

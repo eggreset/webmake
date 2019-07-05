@@ -1,0 +1,36 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+
+    <div class="title_border"><div class="title_box"><h1 class="titlt_inline">活動小聚<mark>活動小聚 </mark></h1><span class="titlt_inline"><a href="活動小聚">更多消息<i class="fas fa-angle-double-right"></i></a></span></div></div>
+    <div class="block_t20">
+        <div class="com article_4 wow fadeInUp 88">
+            <ul class="mhn-slide owl-carousel">
+                @if (Model != null)
+            {
+                foreach (var item in Model.DataResult.Data)
+                {
+                    var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+                    if (mainImage != null)
+                    {
+                <li class="mhn-item">
+                    <div class="mhn-inner aside_4_rec">
+                        <p class="img_block pic pic_size" style="background-image: url(@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)));">
+                            <a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })"><img src="@(mainImage.FileType==FileType.YouTube?_YouTube.SetThumbnail(mainImage.FilePath):RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath))" width="100%" alt=""></a>
+                        </p>
+
+                        <h1><a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">@_Html.WordSubstring(item.ItemLanguage.Subject, 28)</a></h1>
+                        <h2>@item.ItemLanguage.Description</h2>
+                        <p>@_Html.WordSubstring(_Html.RemoveHtml(item.ItemLanguage.Content), 55)<a href="@Url.Action("Get", "Item", new { routeName = item.Item.RouteName })">More</a></p>
+                    </div>
+                </li>
+                    }
+                }
+            }
+            </ul>
+        </div>
+        </div>
+    

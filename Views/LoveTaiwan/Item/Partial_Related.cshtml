@@ -1,0 +1,14 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 延伸閱讀(Detail) *@
+@if (Model.DataResult.Data.Any()) { 
+<ul class="mb-30 moreArticle">
+    <h3 class="new-index-main-title text-center">延伸閱讀</h3>
+    @foreach (var item in Model.DataResult.Data)
+    {
+        <li><a href="@Url.Action("Get","Item", new { routeName = item.Item.RouteName })">@item.ItemLanguage.Subject</a> </li>
+    }
+</ul>}

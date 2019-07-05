@@ -1,0 +1,21 @@
+﻿@model WebMaker.Entity.ViewModels.SendEmailViewModel
+
+<div class="single-widget-area newsletter-widget">
+    <div class="widget-title text-center">
+        <h6>Newsletter</h6>
+    </div>
+    <p>訂閱我們的新聞通訊獲取有關新更新，信息折扣等的通知。</p>
+    <div class="newsletter-form">
+        @using (Html.BeginForm("SubEpaper", "Member", FormMethod.Post))
+        {
+            <input type="hidden" id="successMessage" data-title="訂閱完成" value="@MyTool.Enums.MessageType.Toast" />
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "輸入你的E-mail" })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <button id="SaveBtn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        }
+    </div>
+</div>

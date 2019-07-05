@@ -1,0 +1,54 @@
+﻿@using WebMaker.BLL.Helpers
+@using MyTool.Enums
+@model WebMaker.Entity.ViewModels.OrderListModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Structure.OrderName;
+    //每頁顯示筆數
+    //Model.OrderPageModel.PageSize = 3;
+}
+
+<!-- ****** Breadcumb Area Start ****** -->
+<div class="breadcumb-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="@Url.Action("Index","Home")">會員中心</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="@Url.Action()">@ViewBag.Title</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ****** Breadcumb Area End ****** -->
+
+<section class="blog_area section_padding_0_80 mt-4 single_blog_area">
+    <div class="container">
+        <div class="row">
+            <!--右邊1-->
+            @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Member", "_MemberMenu"))
+            <!--左邊2-->
+            <div class="col-md-10 col-sm-9 col-xs-12">
+                <article class="post-layout post">
+                    <div class="post-header">
+                        <div class="post-information">
+                            <h1>查詢訂單</h1>
+                        </div>
+                        <!-- post-information END -->
+                    </div>
+                    <!-- post-header END -->
+                </article>
+                <div class="member-order">
+                    @Html.Action("OrderPartial", new { model = Model.OrderPageModel })
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+

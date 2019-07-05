@@ -1,0 +1,61 @@
+﻿@using MyTool.Services
+@using MyTool.Enums
+@using WabMaker.Web.Helpers
+@model WabMaker.Web.WebViewModels.ItemPageResult
+
+@* 課程列表-分頁/最新課程/熱門課程 *@
+@{ 
+    int i = 1;
+    string s = "0." + i.ToString() + "s";
+}
+@foreach (var item in Model.DataResult.Data)
+{
+    i++;
+    var mainImage = item.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    <div class="col-12 col-md-6 col-lg-4" data-categories="@string.Join(",",item.ParentItems?.Select(x => x.ID).ToList())"
+         data-minyear="@item.Item.StartTime.ToDateString("yyyy")"
+         data-maxyear="@item.Item.EndTime.ToDateString("yyyy")"
+         data-mindate="@item.Item.StartTime.ToDateString("yyyyMM")"
+         data-maxdate="@item.Item.EndTime.ToDateString("yyyyMM")">
+        <div class="single-post wow fadeInUp" data-wow-delay="s">
+            <!-- Post Thumb -->
+            <div class="post-thumb">
+                <a href="@Url.Action("Get","Item", new { routeName = item.Item.RouteName })">
+                    @if (mainImage != null)
+                    {
+                        if (mainImage.FileType == FileType.YouTube)
+                        {
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="@_YouTube.SetIframe(mainImage.FilePath)" frameborder="0"></iframe>
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="@RouteHelper.SetImagePath(mainImage.FilePath, mainImage.ThumbnailPath)" alt="" />
+                        }
+                    }
+                </a>
+            </div>
+            <!-- Post Content -->
+            <div class="post-content">
+                <div class="post-meta d-flex">
+                    <div class="post-author-date-area d-flex">
+                        <!-- Post Author -->
+                        <div class="post-author">
+                            <a href="#">By @item.ItemLanguage.Author</a>
+                        </div>
+                        <!-- Post Date -->
+                        <div class="post-date">
+                            <a href="#">@item.Item.Date.ToDateString("MMM dd, yyyy")</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("Get","Item", new { routeName = item.Item.RouteName })">
+                    <h4 class="post-headline">@item.ItemLanguage.Subject</h4>
+                </a>
+            </div>
+        </div>
+    </div>
+}
+

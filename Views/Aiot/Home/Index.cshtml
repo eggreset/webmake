@@ -1,0 +1,172 @@
+﻿@using WabMaker.Web.WebViewModels
+@using WabMaker.Web.Helpers
+@using MyTool.ViewModels
+@using MyTool.Services
+@{
+    ViewBag.Title = "";
+    Layout = "../Shared/_Layout.cshtml";
+    SiteInfoViewModel SiteInfo = ApplicationHelper.SiteInfo;
+}
+
+@section meta
+{
+    @if (SiteInfo != null)
+    {
+        if (!string.IsNullOrEmpty(SiteInfo.SiteName))
+        {
+            <meta property="og:title" content="@SiteInfo.SiteName" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="@RouteHelper.Url(true)" />
+        }
+
+        if (!string.IsNullOrEmpty(SiteInfo.MetaTagDescription))
+        {
+            <meta property="og:description" content="@SiteInfo.MetaTagDescription">
+        }
+
+        if (!string.IsNullOrEmpty(SiteInfo.MetaTagOgImage))
+        {
+            <meta property="og:image" content="@RouteHelper.SetUrlPath(SiteInfo.MetaTagOgImage, isAbsolute:true)" />
+        }
+    }
+}
+
+<!--===================================主圖輪播================================================-->
+@section MainSlider{
+    @Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Article_1",
+    ViewName = "Article_1",
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid>
+        {
+        new Guid("49d98f6f-9264-461a-8d17-adbeaf5684b7") })
+})
+}
+
+
+<div id="container" class="space_top">
+    <div class="wrap_box">
+        <!--===================================================最新消息===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Article_2",
+       ViewName = "Article_2",
+       PageSize = 9,
+       CurrentPage = 1,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid>
+            {
+            new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") }),
+       CategoryJson = _Json.ModelToJson(new List<Guid>
+            {
+            new Guid("24046525-6839-4f18-8f5c-c63f0a12d89c")})
+   })
+
+
+        <!--===================================================最新文章===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Article_3",
+       ViewName = "Article_3",
+       PageSize = 9,
+       CurrentPage = 1,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid>
+                     {
+                     new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3"),
+       }),
+       CategoryJson = _Json.ModelToJson(new List<Guid>
+                     {
+                     new Guid("0f20ce24-55c4-492d-a787-3712efb0b8eb"),
+                     new Guid("af3e332f-8fb2-45db-84cd-25ff91e28c11"),
+                     new Guid("ed8988ab-8438-4623-b5f7-50536d77d3aa"),
+                     new Guid("7344db1a-03b6-40ef-b696-eb42fbfebd43"),
+                     new Guid("fb874264-d4aa-43ba-8ef9-4014319d8b65")
+                })
+
+   })
+
+        <!--===================================================文章推薦===================================================================-->
+        @*@Html.Action("Partial", "Item", new ItemPageModel
+            {
+                CacheName = "Article_4",
+                ViewName = "Article_4",
+                PageSize = 4,
+                CurrentPage = 1,
+                SortColumn = SortColumn.Date,
+                StructureJson = _Json.ModelToJson(new List<Guid>
+                     {
+                     new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+            })*@
+
+
+        <!--===================================================AD 兩則式===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Advertisement_1",
+       ViewName = "Advertisement_1",
+       PageSize = 2,
+       CurrentPage = 1,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid> {
+                           new Guid("c16aab4b-a5e5-488c-92e6-8fb6903ecb9e") })
+   })
+
+        <!--===================================================背景單則===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Advertisement_2",
+       ViewName = "Advertisement_2",
+       PageSize = 1,
+       CurrentPage = 1,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid> {
+                           new Guid("9b88d8b8-9e6a-484a-a747-ecba6bf5eb72") })
+   })
+
+        <!--===================================================關於我們===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Article_6",
+       ViewName = "Article_6",
+       IsPaged = false,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid>
+                     {
+                     new Guid("29545ca8-0300-47c7-b15d-0cd72830d4ee") })
+   })
+
+        <!--===================================================活動小聚===================================================================-->
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Article_4",
+       ViewName = "Article_4",
+       PageSize = 9,
+       CurrentPage = 1,
+       SortColumn = SortColumn.Date,
+       StructureJson = _Json.ModelToJson(new List<Guid>
+                 {
+                 new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") }),
+       CategoryJson = _Json.ModelToJson(new List<Guid>
+                 {
+                 new Guid("40352088-827b-498e-9a6d-fe55d09e2655")})
+   })
+
+        <!--===================================================延伸閱讀===================================================================-->
+        @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Get_Partial_Related"))
+
+        @Html.Action("Partial", "Item", new ItemPageModel
+   {
+       CacheName = "Article_7",
+       ViewName = "Article_7",
+       PageSize = 4,
+       CurrentPage = 1,
+       SelectTop = true,
+       SortColumn = SortColumn.Random,
+       StructureJson = _Json.ModelToJson(new List<Guid>
+                     {
+                     new Guid("2888b78f-ccf3-4920-8d71-c6f2e669ebe3") })
+   })
+    </div>
+</div>

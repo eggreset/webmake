@@ -1,0 +1,196 @@
+﻿@using WabMaker.Web.Helpers
+@using MyTool.ViewModels
+@using MyTool.Enums
+@using MyTool.Services
+@model WabMaker.Web.WebViewModels.ItemWebViewModel
+@using WabMaker.Web.WebViewModels
+@{
+    ViewBag.Title = Model.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    var mainImage = Model.ItemFiles?.FirstOrDefault(x => x.SourceType == (int)SourceType.ItemConver);
+
+    var imgUrl = mainImage == null ? "" :
+        (mainImage.FileType == FileType.YouTube) ?
+        _YouTube.SetThumbnail(mainImage.FilePath) ://YouTube縮圖
+        mainImage.FilePath;//封面
+
+    var description = _Html.WordSubstring(_Html.RemoveHtml(Model.ItemLanguage.Content), 200);
+}
+
+@section meta
+{
+    <meta property="og:title" content="@Model.ItemLanguage.Subject" />
+    <meta property="og:url" content="@RouteHelper.Url(true)" />
+    <meta property="og:image" content="@imgUrl" />
+    <meta property="og:description" content="@description" />
+}
+
+<!-- ****** Breadcumb Area Start ****** -->
+<div class="breadcumb-area" style="background-image: url(../../../html/LoveTaiwan/img/bg-img/breadcumb.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="bradcumb-title text-center">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="breadcumb-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                        @if (Model.ParentItems != null)
+                        {
+                            foreach (var item in Model.ParentItems)
+                            {
+                                <li class="breadcrumb-item active" aria-current="page"><a href="@item.RouteName">@item.Subject</a></li>
+                            }
+                        }
+                        <li class="breadcrumb-item active" aria-current="page">@Model.ItemLanguage.Subject</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ****** Breadcumb Area End ****** -->
+<!-- ****** 廣告版位2 自訂標題+連結 ****** -->
+@Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Advertisement_2",
+    ViewName = "Advertisement_2",
+    IsPaged = false,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("c46c4af3-a5d2-4d68-9ecf-6109ed5f2f88") })//Advertisement2
+})
+
+<!-- ****** Blog Area Start ****** -->
+<section class="blog_area section_padding_0_80 mt-5 single_blog_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="row no-gutters">
+
+                    <!-- ******* 文章版位 ******* -->
+                    <!-- Single Post -->
+                    <div class="col-10 col-sm-11">
+                        <div class="single-post">
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="post-meta d-flex">
+                                    <div class="post-author-date-area d-flex">
+                                        <!-- Post Author -->
+                                        <div class="post-author">
+                                            <a href="#">By @Model.ItemLanguage.Author</a>
+                                        </div>
+                                        <!-- Post Date -->
+                                        <div class="post-date">
+                                            <a href="#">@Model.Item.Date.ToDateString("MMM dd, yyyy")</a>
+                                        </div>
+                                    </div>
+                                    <!-- Post Comment & Share Area -->
+                                    @if (Model.ParentItems != null && Model.ParentItems.Any())
+                                    {
+                                        @*<div class="post-comment-share-area d-flex">
+                                                <!-- Post Favourite -->
+                                                <div class="post-favourite">
+                                                    <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
+                                                </div>
+                                                <!-- Post Comments -->
+                                                <div class="post-comments">
+                                                    <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                                </div>
+                                                <!-- Post Share -->
+                                                <div class="post-share">
+                                                    <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>*@
+                                    }
+                                </div>
+                                <a href="#">
+                                    <h2 class="post-headline">@Model.ItemLanguage.Subject</h2>
+                                </a>
+                                @if (imgUrl != "")
+                                {
+                                    <img class="br-30 mb-30" src="@imgUrl" alt="">
+                                }
+
+                                <!--文章內容-->
+                                @Html.Raw(Model.ItemLanguage.Content)
+
+                                <!--延伸閱讀-->
+                                @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Shared", "Get_Partial_Related"), Model)
+                            </div>
+                        </div>
+
+                        <!-- Tags Area -->
+                        @{ var keywordArr = Model.ItemLanguage.Keywords?.Split(','); }
+                        @if (keywordArr != null)
+                        {
+                            <div class="tags-area">
+                                @foreach (var k in keywordArr)
+                                {
+                                    <a href="@Url.Action("Search", "Home", new { q = k })">@k</a>
+                                }
+                            </div>
+                        }
+
+                        @Html.Action("Partial", "Item", new ItemPageModel
+                   {
+                       CacheName = "Advertisement_6",
+                       ViewName = "Advertisement_6",
+                       IsPaged = false,
+                       SortColumn = SortColumn.Date,
+                       StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement6
+                       CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("4a0f2415-21b8-4a12-a3e1-c780e8108712")})
+                   })
+                    </div>
+                </div>
+            </div>
+
+            <!-- ****** Blog Sidebar ****** -->
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="blog-sidebar mt-5 mt-lg-0">
+
+                    <!-- Single Widget Area -->
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_3",
+                   ViewName = "Advertisement_3",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement3
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("e7426d9b-e9a1-497b-a148-568e974ee991")})
+               })
+
+                    <!-- Single Widget Area -->
+                    @Html.Action("Partial", "Item", new ItemPageModel
+               {
+                   CacheName = "Advertisement_4",
+                   ViewName = "Advertisement_4",
+                   IsPaged = false,
+                   SortColumn = SortColumn.Date,
+                   StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("74d7d85a-f204-433c-a1cc-e052e344aa1f") }),//Advertisement4
+                   CategoryJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("6ef9012d-077a-464b-949e-c12eabc742a3")})
+               })
+
+                    <!-- newsletter -->
+                    @Html.Partial(WabMaker.Web.Controllers.BaseController.ViewName("Item", "SubEpaper"), new WebMaker.Entity.ViewModels.SendEmailViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ****** Blog Area End ****** -->

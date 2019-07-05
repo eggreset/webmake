@@ -1,0 +1,74 @@
+﻿@using WabMaker.Web.Helpers
+@using WabMaker.Web.WebViewModels
+@using MyTool.Enums
+@using MyTool.ViewModels
+@using MyTool.Services
+@model WabMaker.Web.WebViewModels.ItemListModel
+
+@* 課程文章列表 *@
+@{
+    ViewBag.Title = Model.ItemViewModel.ItemLanguage.Subject;
+    Layout = "../Shared/_Layout.cshtml";
+    //不分頁
+    Model.ItemPageModel.IsPaged = false;
+    var mainImage = Model.ItemViewModel.ItemFiles.Count == 0 ? new WabMaker.Web.WebViewModels.ItemWebFile() :
+                                                  Model.ItemViewModel.ItemFiles.FirstOrDefault(x => x.SourceType == SourceType.ItemConver);
+}
+
+<!-- ****** Breadcumb Area Start ****** -->
+<div class="breadcumb-area" style="background-image: url(../../../html/LoveTaiwan/img/bg-img/breadcumb.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="bradcumb-title text-center">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="breadcumb-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ****** Breadcumb Area End ****** -->
+<!-- ****** 廣告版位2 自訂標題+連結 ****** -->
+@Html.Action("Partial", "Item", new ItemPageModel
+{
+    CacheName = "Advertisement_2",
+    ViewName = "Advertisement_2",
+    IsPaged = false,
+    SortColumn = SortColumn.Date,
+    StructureJson = _Json.ModelToJson(new List<Guid> {
+                       new Guid("c46c4af3-a5d2-4d68-9ecf-6109ed5f2f88") })//Advertisement2
+})
+
+<!-- ****** Blog Area Start ****** -->
+<section class="blog_area section_padding_0_80 mt-5">
+    <div class="container">
+        <div class="row">
+            <!--講座-->
+            @* 最新講座 *@
+            @Html.Action("Partial", "Item", new ItemPageModel
+                   {
+                       CacheName = "ListCourse_Page_new",
+                       ViewName = "ListCourse_Page",
+                       PageSize = 6,
+                       SortColumn = SortColumn.Date,
+                       StructureJson = _Json.ModelToJson(new List<Guid> {
+                             new Guid("c4ebcc24-d46e-4a86-9e4f-6a35d7dd8f85")})//課程文章
+                   })
+        </div>
+    </div>
+</section>
+<!-- ****** Blog Area End ****** -->

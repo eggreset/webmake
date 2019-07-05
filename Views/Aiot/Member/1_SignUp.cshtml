@@ -1,0 +1,73 @@
+﻿@model WebMaker.Entity.ViewModels.SignUpViewModel
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "註冊新會員";
+}
+
+<div id="top" style="z-index: 2;">
+    <div class="H_10" style="background-image: url('../../../html/Aiot/images/login_bg.jpg'); width: 1904px; ">
+    </div>
+    <span class="login_box form-style-10 wow bounceInUp">
+        <h1><i class="fas fa-user-edit"></i>  註冊新會員</h1>
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-member form-login" }))
+        {
+            <input type="hidden" id="returnUrl" value="@Url.Action("Login", "Member", new { })" />
+            <input type="hidden" id="successMessage" data-title="註冊完成" value="@MyTool.Enums.MessageType.Confirm" />
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.ExternalType)
+            <div class="inner-wrap off_space_top">
+                <h2>個人帳號設定</h2>
+                <label>
+                    <i class="far fa-address-card"></i>
+                    @Html.TextBoxFor(model => model.Email, new { id = "email", @class = "login-input100 form-control", placeholder = "請輸入您有效的email帳號", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </label>
+                @if (Model.ExternalType == null)
+                {
+                    <label>
+                        <i class="fas fa-key"></i>
+                        @Html.PasswordFor(model => model.Password, new { id = "pwd", @class = "login-input100 form-control", placeholder = "請輸入您的密碼", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </label>
+                    <label>
+                        <i class="fas fa-key"></i>
+                        @Html.PasswordFor(model => model.PasswordConfirm, new { id = "pwd1", @class = "login-input100 form-control", placeholder = "確認密碼", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })
+                    </label>
+                }
+                <label>
+                    <i class="fas fa-user"></i>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", autocomplete = "off", placeholder = "請輸入您的姓名" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </label>
+                @if (Model.ExternalType == null)
+                {
+                    <label>
+                        <i class="fas fa-pencil-alt"></i>
+                        @Html.TextBoxFor(model => model.Captcha, "", new { @class = "form-control", placeholder = "請輸入驗證碼", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                    </label>
+                    <div class="cap_box">
+                        <img class="imgverifycode" src="@Url.Action("CaptchaImage","Member")" alt="驗證碼" />
+                        <a class="btnnewcode" href="javascript:"><i class="fas fa-sync-alt"></i>重新產生驗證碼</a>
+                    </div>
+                }
+                @*<div class="section left no_space_bottom">
+                        <span>
+                            <input type="checkbox" id="c1" name="aa" />
+                            <label for="c1"><span></span>已閱讀，<a href="#"> 資料使用政策與使用條款<i class="fas fa-chevron-circle-right"></i></a></label>
+                            <input type="checkbox" id="c2" name="cc" />
+                            <label for="c2"><span></span>電子報訂閱</label>
+                        </span>
+                    </div>*@
+                <div class="button-section on_space_top">
+                    <input type="button" id="SaveBtn" value="會員註冊">
+                </div><div class="section center"><span>已經有帳號， <a href="@Url.Action("Login","Member")" class="text_b">馬上登入 <i class="fas fa-chevron-circle-right"></i></a></span></div>
+            </div>
+        }
+</div>
